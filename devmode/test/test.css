@@ -1,5 +1,5 @@
 /* รูปแบบสำหรับหน้าจอขนาดเล็ก */
-@media (max-width: 768px) {
+@media (max-width: 300px) {
     .container-fluid {
       width: 100%;
     }
@@ -9,7 +9,7 @@
   }
   
   /* รูปแบบสำหรับหน้าจอขนาดกลาง */
-  @media (min-width: 769px) and (max-width: 992px) {
+  @media (min-width: 300px) and (max-width: 992px) {
     .container-fluid {
       width: 90%;
     }
@@ -83,3 +83,7 @@ footer p {
     padding-top: 20px;
     text-align: center;
 }
+.card-text {
+  white-space: pre-line;
+}
+
