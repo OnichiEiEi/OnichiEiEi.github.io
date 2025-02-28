@@ -16,13 +16,29 @@
             </div>
             <div class="card" id="card" onclick="flipCard()">
               <div class="card-inner" id="cardInner">
+                  <div class="card-front">
+                      <img src="/mbproject/assets/img/Card_pic.png" alt="Front Image">
+                  </div>
+                  <div class="card-back">
+                      <img src="/mbproject/assets/img/Rectangle 1.png" alt="Back Image" id="flashCard">
+                  </div>
               </div>
             </div>
             <div class="emoji">
               <a href="#" class="btn-emoji" onclick="showMood()">
+                  <img src="/mbproject/assets/img/Frame 2.png" alt="" id="showEmoji">
               </a>
           </div>
             <div class="overlay" id="emojiOverlay">
+              <div class="overlay-content">
+                <span class="closebtn" onclick="closeOverlay()">&times;</span>
+                <div class="emoji-options">
+                    <img src="/mbproject/assets/img/happy_emo.png" alt="Emoji 1" onclick="selectEmoji('happy_emo.png')">
+                    <img src="/mbproject/assets/img/anxi_emo.png"  alt="Emoji 2" onclick="selectEmoji('anxi_emo.png')">
+                    <img src="/mbproject/assets/img/ANGRY_emo.png" alt="Emoji 3" onclick="selectEmoji('ANGRY_emo.png')">
+                    <img src="/mbproject/assets/img/ennui_emo.png" alt="Emoji 4" onclick="selectEmoji('ennui_emo.png')">
+                </div>
+              </div>
             </div>
         </div>
         <div class="comment">
@@ -76,6 +92,7 @@
           <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
           <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
           <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
+          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
         </div>
       </section>
       <div class="footer">
@@ -83,6 +100,9 @@
       </div>
       <div class="navbar">
         <div class="nav">
+          <a href="#"><img src="/mbproject/assets/img/calen.png" alt="" onclick="calenderShow()"></a>
+          <a href="#"><img src="/mbproject/assets/img/Vector (2).png" alt="" onclick="homeShow()" class="home"></a>
+          <a href="#"><img src="/mbproject/assets/img/burger.png" alt="" onclick="settingShow()"></a>
         </div>
       </div>
     </div>
