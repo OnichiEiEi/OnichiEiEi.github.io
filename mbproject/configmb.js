@@ -6,6 +6,7 @@ function calenderShow() {
     document.getElementById("homePage").classList.remove("visible");
     document.getElementById("calendarPage").classList.remove("hidden");
     document.getElementById("calendarPage").classList.add("visible");
+    sendToAppInventor("calenderShow");
 }
 
 function homeShow() {
@@ -14,14 +15,17 @@ function homeShow() {
     document.getElementById("calendarPage").classList.remove("visible");
     document.getElementById("homePage").classList.remove("hidden");
     document.getElementById("homePage").classList.add("visible");
+    sendToAppInventor("homeShow");
 }
 
 function showMood() {
     document.getElementById('emojiOverlay').style.display = 'flex';
+    sendToAppInventor("showMood");
 }
 
 function closeOverlay() {
     document.getElementById('emojiOverlay').style.display = 'none';
+    sendToAppInventor("closeOverlay");
 }
 
 function selectEmoji(emoji) {
@@ -33,6 +37,7 @@ function selectEmoji(emoji) {
     }
     updateMonthEmoji(emoji);
     closeOverlay(); // Close the overlay after selecting an emoji
+    sendToAppInventor("selectEmoji");
 }
 
 function updateMonthEmoji(emoji) {
@@ -176,3 +181,10 @@ const emojiMessages = {
         "Keep exploring"
     ]
 };
+
+// Function to send message to App Inventor
+function sendToAppInventor(message) {
+    if (window.AppInventor) {
+        window.AppInventor.setWebViewString(message);
+    }
+}
