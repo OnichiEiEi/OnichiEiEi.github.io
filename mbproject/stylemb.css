@@ -213,6 +213,7 @@ body {
 .footer .text-box {
     position: relative; 
     justify-self: center;
+    align-items: center;
     width: 70%;
     top: -140px;
     background-color: rgba(255, 255, 255, 0.7);
