@@ -1,0 +1,282 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* สีพื้นหลัง */
+    overflow: hidden;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.container {
+    max-width: 600px;
+    min-height: 100vh;
+    margin: auto;
+    background-image: url('/mbproject/assets/img/home_anxiety.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #C2F1FF;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+/* .cloud1 {
+    z-index: -1;
+    position: absolute;
+    top: 260px;
+    left: 280px;
+}
+
+.cloud2 {
+    z-index: -1;
+    position: absolute;
+    top: 220px;
+    left: 20px;
+}
+
+.cloud3 {
+    z-index: -1;
+    position: absolute;
+    top: 460px;
+    left: 270px;
+}
+
+.cloud4 {
+    z-index: -1;
+    position: absolute;
+    top: 30px;
+    left: 270px;
+} */
+
+.content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 0;
+    font-size: 2rem;
+    color: #000;
+}
+
+.date .day {
+    padding-right: 10px;
+    margin-top: 20px;
+}
+
+.date .month {
+    padding-right: 100px;
+    margin-top: 20px;
+}
+
+.content img {
+    width: 100%;
+    height: auto;
+    max-width: 250px; /* ปรับขนาดรูปภาพ */
+}
+
+.card {
+    perspective: 1000px;
+    width: 250px;
+    height: 250px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.emoji {
+    width: 100%;
+    height: auto;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.btn-emoji {
+    display: block;
+    width: 70px;
+    margin: auto;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.overlay-content {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.closebtn {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.emoji-options img {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.comment {
+    width: 80%;
+    height: auto;
+    margin: auto;
+    display: block;
+}
+
+.comment p {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.comment input {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #a7a7a7;
+    border-radius: 25px;
+    text-align: start;
+}
+
+.footer {
+    position: absolute;
+    bottom: -7%;
+    text-align: center;
+    width: 100%;
+    height: auto;
+}
+
+.footer img {
+    width: 100%; /* ปรับขนาดรูปภาพ */
+    height: auto;
+}
+
+.footer .text-box {
+    position: relative; 
+    justify-self: center;
+    width: 70%;
+    top: -140px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 0px;
+    border: 1px solid #a7a7a7;
+    border-radius: 10px;
+}
+
+.navbar {
+    position: fixed;
+    bottom: 0;
+    max-width: 600px;
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #EF0074; /* สีพื้นหลัง */
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    max-height: 45px;
+}
+
+.nav img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.nav .home {
+    position: relative;
+    top: -20px;
+    width: 50px;
+    height: auto;
+    background-color: #FF4196;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.months {
+    padding-right: 10px;
+    margin-top: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, auto);
+    gap: 10px; /* Adjust the gap between grid items if needed */
+    justify-items: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.grid-emoji {
+    width: 100%;
+    height: auto;
+    max-width: 100px; /* Adjust the max width if needed */
+}
