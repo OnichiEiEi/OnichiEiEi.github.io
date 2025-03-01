@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="stylemb.css">
     <script src="/mbproject/configmb.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tinydb@1.0.0/dist/tinydb.min.js"></script>
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <title>BunnyHop</title>
 </head>
 <body>
@@ -107,5 +109,78 @@
         </div>
       </div>
     </div>
+    <div class="container hidden" id="settingPage">
+      <header>
+        <button class="back-btn" onclick="homeShow()"><- Home</button>
+      </header>
+      <img src="/mbproject/assets/img/Frame 3 (1).png" alt="Bunny Image" class="bunny-image">
+      <div class="profile">
+        <img class="avatar" id="userAvatar" src="/mbproject/assets/img/profull.png" alt="Profile">
+        <div class="info">
+          <h3 id="userName">User name</h3>
+        </div>
+      </div>
+      <h4>Settings</h4>
+      <ul class="menu-list">
+        <li>
+          <span href="#">
+            <img src="/mbproject/assets/img/s2.noti.png" class="icon"> Notifications
+          </span>
+          <label class="switch">
+            <input type="checkbox" id="notificationSwitch">
+            <span class="slider"></span>
+          </label>
+        </li>
+        <div id="notificationForm" class="notification-form" style="display: none;">
+          <label for="notificationTime">Select Time:</label>
+          <input type="time" id="notificationTime" />
+          <button type="button">Save Time</button>
+        </div>
+        <div id="notificationAlert" class="notification-alert" style="display: none;">
+          การแจ้งเตือนของคุณได้ถูกตั้งเวลาแล้ว!
+        </div>
+        <li>
+          <a href="custo.html">
+            <img src="/mbproject/assets/img/s2.custom.png" class="icon"> Customization
+            <span class="arrow">></span>
+          </a>
+        </li>
+        <li>
+          <span>
+            <img src="/mbproject/assets/img/s2.passcode.png" class="icon"> Passcode
+          </span>
+          <label class="switch">
+            <input type="checkbox" id="passcode-toggle">
+            <span class="slider"></span>
+          </label>
+        </li>
+      </ul>
+      <div id="passcode-modal" class="modal">
+        <div class="modal-content">
+            <h4>New Passcode</h4>
+            <label for="new-passcode">Enter 4 Number:</label>
+            <input type="tel" id="new-passcode" maxlength="4" placeholder="####" readonly>
+            <div class="number-pad">
+                <button class="number" data-number="1">1</button>
+                <button class="number" data-number="2">2</button>
+                <button class="number" data-number="3">3</button>
+                <button class="number" data-number="4">4</button>
+                <button class="number" data-number="5">5</button>
+                <button class="number" data-number="6">6</button>
+                <button class="number" data-number="7">7</button>
+                <button class="number" data-number="8">8</button>
+                <button class="number" data-number="9">9</button>
+                <button id="zero" class="number" data-number="0">0</button> <!-- ปุ่มเลข 0 -->
+                <button id="clear" class="number">c</button>
+            </div>
+                    <!-- แยกปุ่ม "บันทึก" และ "ยกเลิก" ออกมาในส่วนที่แยกต่างหาก -->
+        <div class="modal-actions">
+            <button id="save-passcode">save</button>
+            <button id="cancel-passcode">cancle</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    
 </body>
 </html>
