@@ -129,54 +129,6 @@ function updateDate() {
     document.getElementById('numMonths').innerText = fullMonth;
 }
 
-// Call the function to update the date on page load
-window.onload = () => {
-    updateDate();
-    setInitialImage();
-    loadEmojis();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
-    updateImageAtInterval(oneDayInMilliseconds);
-    setInterval(() => {
-        // Update the emoji for the current day
-        const currentEmoji = document.getElementById('showEmoji').src.split('/').pop();
-        updateMonthEmoji(currentEmoji);
-    }, oneDayInMilliseconds);
-};
-
-// Function to flip the card
-function flipCard() {
-    const card = document.getElementById('card');
-    card.classList.toggle('flipped');
-    updateImage();
-}
-
-const emojiMessages = {
-    'happy_emo.png': [
-        "I'm here for you na ja",
-        "Stay strong!",
-        "You got this!",
-        "Keep smiling!"
-    ],
-    'anxi_emo.png': [
-        "It's okay to feel anxious",
-        "Take a deep breath",
-        "You are not alone",
-        "Stay calm"
-    ],
-    'ANGRY_emo.png': [
-        "It's okay to feel angry",
-        "Take a moment to cool down",
-        "You are in control",
-        "Stay composed"
-    ],
-    'ennui_emo.png': [
-        "Feeling bored is normal",
-        "Find something fun to do",
-        "Stay engaged",
-        "Keep exploring"
-    ]
-};
-
 // Initialize TinyDB
 const db = new TinyDB('myDatabase');
 
