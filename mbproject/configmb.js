@@ -12,8 +12,20 @@ function homeShow() {
     console.log("homeShow called");
     document.getElementById("calendarPage").classList.add("hidden");
     document.getElementById("calendarPage").classList.remove("visible");
+    document.getElementById("settingPage").classList.add("hidden");
+    document.getElementById("settingPage").classList.remove("visible");
     document.getElementById("homePage").classList.remove("hidden");
     document.getElementById("homePage").classList.add("visible");
+}
+
+function settingShow() {
+    console.log("sittingShow called");
+    document.getElementById("homePage").classList.add("hidden");
+    document.getElementById("homePage").classList.remove("visible");
+    document.getElementById("calendarPage").classList.add("hidden");
+    document.getElementById("calendarPage").classList.remove("visible");
+    document.getElementById("settingPage").classList.remove("hidden");
+    document.getElementById("settingPage").classList.add("visible");
 }
 
 function showMood() {
@@ -78,10 +90,27 @@ function loadEmojis() {
 
 // Array of image paths
 const images = [
-    '/mbproject/assets/img/Rectangle 1.png',
-    '/mbproject/assets/img/Rectangle 2.png',
-    '/mbproject/assets/img/Rectangle 1.png',
-    '/mbproject/assets/img/Rectangle 2.png'
+    '/mbproject/assets/img/Front_Challenge_card.png',
+    '/mbproject/assets/img/Front_Challenge_card (1).png',
+    '/mbproject/assets/img/Front_Challenge_card (2).png',
+    '/mbproject/assets/img/Front_Challenge_card (3).png',
+    '/mbproject/assets/img/Front_Challenge_card (4).png',
+    '/mbproject/assets/img/Front_Challenge_card (5).png',
+    '/mbproject/assets/img/Front_Challenge_card (6).png',
+    '/mbproject/assets/img/Front_Challenge_card (7).png',
+    '/mbproject/assets/img/Front_Challenge_card (8).png',
+    '/mbproject/assets/img/Front_Challenge_card (9).png',
+    '/mbproject/assets/img/Front_Challenge_card (10).png',
+    '/mbproject/assets/img/Front_Challenge_card (11).png',
+    '/mbproject/assets/img/Front_Challenge_card (12).png',
+    '/mbproject/assets/img/Front_Challenge_card (13).png',
+    '/mbproject/assets/img/Front_Challenge_card (14).png',
+    '/mbproject/assets/img/Front_Challenge_card (15).png',
+    '/mbproject/assets/img/Front_Challenge_card (16).png',
+    '/mbproject/assets/img/Front_Challenge_card (17).png',
+    '/mbproject/assets/img/Front_Challenge_card (18).png',
+    '/mbproject/assets/img/Front_Challenge_card (19).png',
+    '/mbproject/assets/img/Front_Challenge_card (20).png'
 ];
 
 // Function to get a random image from the array
@@ -129,44 +158,12 @@ function updateDate() {
     document.getElementById('numMonths').innerText = fullMonth;
 }
 
-// Initialize TinyDB
-const db = new TinyDB('myDatabase');
-
-// Function to save data from localStorage to TinyDB
-function saveToTinyDB(key) {
-    const value = localStorage.getItem(key);
-    if (value) {
-        db.setItem(key, value);
-    }
-}
-
-// Function to load data from TinyDB to localStorage
-function loadFromTinyDB(key) {
-    const value = db.getItem(key);
-    if (value) {
-        localStorage.setItem(key, value);
-    }
-}
-
-// Save all relevant data to TinyDB
-function saveAllToTinyDB() {
-    const keys = Object.keys(localStorage);
-    keys.forEach(key => saveToTinyDB(key));
-}
-
-// Load all relevant data from TinyDB
-function loadAllFromTinyDB() {
-    const keys = db.keys();
-    keys.forEach(key => loadFromTinyDB(key));
-}
-
-// Call the function to load data from TinyDB on page load
+// Call the function to update the date on page load
 window.onload = () => {
-    loadAllFromTinyDB();
     updateDate();
     setInitialImage();
     loadEmojis();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+    const oneDayInMilliseconds = 1 * 1 * 10 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
         // Update the emoji for the current day
@@ -175,7 +172,189 @@ window.onload = () => {
     }, oneDayInMilliseconds);
 };
 
-// Save data to TinyDB before the page unloads
-window.onbeforeunload = () => {
-    saveAllToTinyDB();
+// Function to flip the card
+function flipCard() {
+    const card = document.getElementById('card');
+    card.classList.toggle('flipped');
+    updateImage();
+}
+
+const emojiMessages = {
+    'happy_emo.png': [
+        "I'm here for you na ja",
+        "Stay strong!",
+        "You got this!",
+        "Keep smiling!"
+    ],
+    'anxi_emo.png': [
+        "It's okay to feel anxious",
+        "Take a deep breath",
+        "You are not alone",
+        "Stay calm"
+    ],
+    'ANGRY_emo.png': [
+        "It's okay to feel angry",
+        "Take a moment to cool down",
+        "You are in control",
+        "Stay composed"
+    ],
+    'ennui_emo.png': [
+        "Feeling bored is normal",
+        "Find something fun to do",
+        "Stay engaged",
+        "Keep exploring"
+    ]
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+    const passcodeToggle = document.getElementById("passcode-toggle");
+    const passcodeModal = document.getElementById("passcode-modal");
+    const passcodeInput = document.getElementById("new-passcode");
+    const savePasscodeBtn = document.getElementById("save-passcode");
+    const cancelPasscodeBtn = document.getElementById("cancel-passcode");
+    const deletePasscodeBtn = document.createElement("button");
+    deletePasscodeBtn.id = "delete-passcode";
+    deletePasscodeBtn.textContent = "Delete Passcode";
+  
+    // เช็คว่ามีรหัสผ่านใน localStorage หรือไม่
+    if (localStorage.getItem("passcode")) {
+        passcodeToggle.checked = true;
+    } else {
+        passcodeToggle.checked = false;
+    }
+  
+    passcodeToggle.addEventListener("change", function () {
+        if (this.checked) {
+            passcodeModal.style.display = "block";
+        } else {
+            localStorage.removeItem("passcode");
+            localStorage.setItem("passcodeEnabled", "false");
+            alert("Passcode ถูกปิดแล้ว");
+            passcodeToggle.checked = false;
+        }
+    });
+  
+    savePasscodeBtn.addEventListener("click", function () {
+        if (passcodeInput.value.length === 4) {
+            localStorage.setItem("passcode", passcodeInput.value);
+            localStorage.setItem("passcodeEnabled", "true");
+            alert("รหัสผ่านถูกบันทึกแล้ว!");
+            passcodeModal.style.display = "none";
+        } else {
+            alert("กรุณากรอกรหัสผ่าน 4 หลัก");
+        }
+    });
+  
+    cancelPasscodeBtn.addEventListener("click", function () {
+        passcodeModal.style.display = "none";
+        passcodeToggle.checked = false;
+    });
+  
+    deletePasscodeBtn.addEventListener("click", function () {
+        localStorage.removeItem("passcode");
+        localStorage.setItem("passcodeEnabled", "false");
+        alert("รหัสผ่านถูกลบแล้ว!");
+        passcodeModal.style.display = "none";
+        passcodeToggle.checked = false;
+    });
+  
+    document.querySelector(".modal-content").appendChild(deletePasscodeBtn);
+  
+    // เพิ่มฟังก์ชันให้กดตัวเลขแล้วขึ้นที่หน้าจอ
+    const numberButtons = document.querySelectorAll(".number");
+    const clearButton = document.getElementById("clear");
+  
+    numberButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            if (passcodeInput.value.length < 4) {
+                passcodeInput.value += this.dataset.number;
+            }
+        });
+    });
+  
+    clearButton.addEventListener("click", function () {
+        passcodeInput.value = "";
+    });
+  });
+  
+  document.addEventListener("DOMContentLoaded", function () {
+      const notificationSwitch = document.getElementById("notificationSwitch");
+      const notificationForm = document.getElementById("notificationForm");
+      const notificationTimeInput = document.getElementById("notificationTime");
+      const saveNotificationBtn = document.querySelector("#notificationForm button");
+      const notificationAlert = document.getElementById("notificationAlert");
+  
+      // โหลดค่าที่บันทึกไว้
+      if (localStorage.getItem("notificationEnabled") === "true") {
+          notificationSwitch.checked = true;
+          notificationForm.style.display = "block";
+      } else {
+          notificationForm.style.display = "none";
+      }
+  
+      if (localStorage.getItem("notificationTime")) {
+          notificationTimeInput.value = localStorage.getItem("notificationTime");
+      }
+  
+      // เปิด/ปิดฟอร์มแจ้งเตือน
+      notificationSwitch.addEventListener("change", function () {
+          if (this.checked) {
+              notificationForm.style.display = "block";
+              localStorage.setItem("notificationEnabled", "true");
+          } else {
+              notificationForm.style.display = "none";
+              localStorage.setItem("notificationEnabled", "false");
+          }
+      });
+  
+      // บันทึกเวลาแจ้งเตือน
+      saveNotificationBtn.addEventListener("click", function () {
+          const timeValue = notificationTimeInput.value;
+          if (timeValue) {
+              localStorage.setItem("notificationTime", timeValue);
+              notificationAlert.style.display = "block";
+              setTimeout(() => {
+                  notificationAlert.style.display = "none";
+              }, 3000);
+          } else {
+              alert("กรุณาเลือกเวลาที่ต้องการแจ้งเตือน");
+          }
+      });
+  
+      // ฟังก์ชันแจ้งเตือนเมื่อถึงเวลาที่ตั้งไว้
+      function checkNotificationTime() {
+          const savedTime = localStorage.getItem("notificationTime");
+          if (!savedTime) return;
+  
+          const now = new Date();
+          const [savedHour, savedMinute] = savedTime.split(":").map(Number);
+  
+          if (now.getHours() === savedHour && now.getMinutes() === savedMinute) {
+              showNotification();
+          }
+      }
+  
+      // ฟังก์ชันแจ้งเตือน (เสียง + การแจ้งเตือน)
+      function showNotification() {
+      
+          // ใช้ Notification API
+          if (Notification.permission === "granted") {
+              new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
+          } else if (Notification.permission !== "denied") {
+              Notification.requestPermission().then(permission => {
+                  if (permission === "granted") {
+                      new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
+                  }
+              });
+          }
+      }
+  
+      // ขออนุญาตแจ้งเตือนเมื่อโหลดหน้าเว็บ
+      if (Notification.permission !== "granted") {
+          Notification.requestPermission();
+      }
+  
+      // ตรวจสอบแจ้งเตือนทุก 30 วินาที
+      setInterval(checkNotificationTime, 30000);
+  });
+  
