@@ -176,3 +176,54 @@ const emojiMessages = {
         "Keep exploring"
     ]
 };
+
+// Initialize TinyDB
+const db = new TinyDB('myDatabase');
+
+// Function to save data from localStorage to TinyDB
+function saveToTinyDB(key) {
+    const value = localStorage.getItem(key);
+    if (value) {
+        db.setItem(key, value);
+    }
+}
+
+// Function to load data from TinyDB to localStorage
+function loadFromTinyDB(key) {
+    const value = db.getItem(key);
+    if (value) {
+        localStorage.setItem(key, value);
+    }
+}
+
+// Save all relevant data to TinyDB
+function saveAllToTinyDB() {
+    const keys = Object.keys(localStorage);
+    keys.forEach(key => saveToTinyDB(key));
+}
+
+// Load all relevant data from TinyDB
+function loadAllFromTinyDB() {
+    const keys = db.keys();
+    keys.forEach(key => loadFromTinyDB(key));
+}
+
+// Call the function to load data from TinyDB on page load
+window.onload = () => {
+    loadAllFromTinyDB();
+    updateDate();
+    setInitialImage();
+    loadEmojis();
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+    updateImageAtInterval(oneDayInMilliseconds);
+    setInterval(() => {
+        // Update the emoji for the current day
+        const currentEmoji = document.getElementById('showEmoji').src.split('/').pop();
+        updateMonthEmoji(currentEmoji);
+    }, oneDayInMilliseconds);
+};
+
+// Save data to TinyDB before the page unloads
+window.onbeforeunload = () => {
+    saveAllToTinyDB();
+};
