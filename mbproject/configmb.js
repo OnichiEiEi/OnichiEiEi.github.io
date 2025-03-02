@@ -90,12 +90,12 @@ function loadEmojis() {
 
 // Array of image paths
 const images = [
-    'https://cdn.discordapp.com/attachments/1332368161315491941/1345791444094287902/ANGRY_emo.png?ex=67c5d573&is=67c483f3&hm=30bc417340344423b05fd2774c6f23017c50419805ef54d87d38bba8749b4cc1&',
-    'https://cdn.discordapp.com/attachments/1332368161315491941/1345791444350144552/anxi_emo.png?ex=67c5d573&is=67c483f3&hm=0013e9b86a2cdd4e4deae057f96455b1b1c445cebd516b45f2bb9a29e849b117&'
-    // '/assets/img/Front_Challenge_card (2).png',
-    // '/assets/img/Front_Challenge_card (3).png',
-    // '/assets/img/Front_Challenge_card (4).png',
-    // '/assets/img/Front_Challenge_card (5).png'
+    '/assets/img/Front_Challenge_card.png',
+    '/assets/img/Front_Challenge_card (1).png',
+    '/assets/img/Front_Challenge_card (2).png',
+    '/assets/img/Front_Challenge_card (3).png',
+    '/assets/img/Front_Challenge_card (4).png',
+    '/assets/img/Front_Challenge_card (5).png'
 ];
 
 // Function to get a random image from the array
@@ -148,7 +148,7 @@ window.onload = () => {
     updateDate();
     setInitialImage();
     loadEmojis();
-    const oneDayInMilliseconds = 1 * 1 * 10 * 1000; // 24 hours
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
         // Update the emoji for the current day
