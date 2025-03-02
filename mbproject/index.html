@@ -1,111 +1,308 @@
 <!DOCTYPE html>
 <html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="stylemb.css">
-    <script src="/mbproject/configmb.js"></script>
-    <!-- Add Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" href="stylemb.css" />
+    <!-- <script src="configmb.js"></script> -->
     <title>BunnyHop</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container" id="homePage">
-        <div class="content">
-            <div class="date">
-              <div class="day" id="numDay"><h3 style="margin: 0;">1</h3></div>
-              <div class="month" id="numMonth"><h3 style="margin: 0;">JAN</h3></div>
-            </div>
-            <div class="card" id="card" onclick="flipCard()">
-              <div class="card-inner" id="cardInner">
-                  <div class="card-front">
-                      <img src="/mbproject/assets/img/Card_pic.png" alt="Front Image">
-                  </div>
-                  <div class="card-back">
-                      <img src="/mbproject/assets/img/Rectangle 1.png" alt="Back Image" id="flashCard">
-                  </div>
-              </div>
-            </div>
-            <div class="emoji">
-              <a href="#" class="btn-emoji" onclick="showMood()">
-                  <img src="/mbproject/assets/img/Frame 2.png" alt="" id="showEmoji">
-              </a>
-          </div>
-            <div class="overlay" id="emojiOverlay">
-              <div class="overlay-content">
-                <span class="closebtn" onclick="closeOverlay()">&times;</span>
-                <div class="emoji-options">
-                    <img src="/mbproject/assets/img/happy_emo.png" alt="Emoji 1" onclick="selectEmoji('happy_emo.png')">
-                    <img src="/mbproject/assets/img/anxi_emo.png"  alt="Emoji 2" onclick="selectEmoji('anxi_emo.png')">
-                    <img src="/mbproject/assets/img/ANGRY_emo.png" alt="Emoji 3" onclick="selectEmoji('ANGRY_emo.png')">
-                    <img src="/mbproject/assets/img/ennui_emo.png" alt="Emoji 4" onclick="selectEmoji('ennui_emo.png')">
-                </div>
-              </div>
-            </div>
+      <div class="content">
+        <div class="date">
+          <div class="day" id="numDay"><h3 style="margin: 0">1</h3></div>
+          <div class="month" id="numMonth"><h3 style="margin: 0">JAN</h3></div>
         </div>
-        <div class="comment">
-          <input type="text" class="input-comment" placeholder="How do you feel today?">
-        </div>  
-        <div class="footer">
-            <img src="/mbproject/assets/img/Frame 3.png" alt="Bunny">
-            <div class="text-box"><p id="showSupport">I'm here for you na ja</p></div>
-        </div> 
-        <div class="navbar">
-          <div class="nav">
-            <a href="#"><img src="/mbproject/assets/img/calen.png" alt="" onclick="calenderShow()"></a>
-            <a href="#"><img src="/mbproject/assets/img/Vector (2).png" alt="" onclick="homeShow()" class="home"></a>
-            <a href="#"><img src="/mbproject/assets/img/burger.png" alt="" onclick="settingShow()"></a>
+        <div class="card" id="card" onclick="flipCard()">
+          <div class="card-inner" id="cardInner">
+            <div class="card-front">
+              <img src="/assets/img/Card_pic.png" alt="Front Image" />
+            </div>
+            <div class="card-back">
+              <img
+                src="/assets/img/Rectangle 1.png"
+                alt="Back Image"
+                id="flashCard"
+              />
+            </div>
           </div>
         </div>
-    </div>
-    <div class="container hidden" id="calendarPage">
-      <div class="date">
-        <div class="months" id="numMonths"><h3 style="margin: 0;">January</h3></div>
+        <div class="emoji">
+          <a href="#" class="btn-emoji" onclick="showMood()">
+            <img src="/assets/img/Frame 2.png" alt="" id="showEmoji" />
+          </a>
+        </div>
+        <div class="overlay" id="emojiOverlay">
+          <div class="overlay-content">
+            <span class="closebtn" onclick="closeOverlay()">&times;</span>
+            <div class="emoji-options">
+              <img
+                src="/assets/img/happy_emo.png"
+                alt="Emoji 1"
+                onclick="selectEmoji('happy_emo.png')"
+              />
+              <img
+                src="/assets/img/anxi_emo.png"
+                alt="Emoji 2"
+                onclick="selectEmoji('anxi_emo.png')"
+              />
+              <img
+                src="/assets/img/ANGRY_emo.png"
+                alt="Emoji 3"
+                onclick="selectEmoji('ANGRY_emo.png')"
+              />
+              <img
+                src="/assets/img/ennui_emo.png"
+                alt="Emoji 4"
+                onclick="selectEmoji('ennui_emo.png')"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      <section class="calendar">
-        <div class="grid" id="emojiGrid">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-          <img src="/mbproject/assets/img/Frame 2.png" alt="" class="grid-emoji" id="monthEmoji">
-        </div>
-      </section>
+      <div class="comment">
+        <input
+          type="text"
+          class="input-comment"
+          placeholder="How do you feel today?"
+        />
+      </div>
       <div class="footer">
-        <img src="/mbproject/assets/img/Frame 3.png" alt="Bunny">
+        <img src="/assets/img/Frame 3.png" alt="Bunny" />
+        <div class="text-box">
+          <p id="showSupport">I'm here for you na ja</p>
+        </div>
       </div>
       <div class="navbar">
         <div class="nav">
-          <a href="#"><img src="/mbproject/assets/img/calen.png" alt="" onclick="calenderShow()"></a>
-          <a href="#"><img src="/mbproject/assets/img/Vector (2).png" alt="" onclick="homeShow()" class="home"></a>
-          <a href="#"><img src="/mbproject/assets/img/burger.png" alt="" onclick="settingShow()"></a>
+          <a href="#"
+            ><img src="/assets/img/calen.png" alt="" onclick="calenderShow()"
+          /></a>
+          <a href="#"
+            ><img
+              src="/assets/img/Vector (2).png"
+              alt=""
+              onclick="homeShow()"
+              class="home"
+          /></a>
+          <a href="#"
+            ><img src="/assets/img/burger.png" alt="" onclick="settingShow()"
+          /></a>
+        </div>
+      </div>
+    </div>
+    <div class="container hidden" id="calendarPage">
+      <div class="date">
+        <div class="months" id="numMonths">
+          <h3 style="margin: 0">January</h3>
+        </div>
+      </div>
+      <section class="calendar">
+        <div class="grid" id="emojiGrid">
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+          <img
+            src="/assets/img/Frame 2.png"
+            alt=""
+            class="grid-emoji"
+            id="monthEmoji"
+          />
+        </div>
+      </section>
+      <div class="footer">
+        <img src="/assets/img/Frame 3.png" alt="Bunny" />
+      </div>
+      <div class="navbar">
+        <div class="nav">
+          <a href="#"
+            ><img src="/assets/img/calen.png" alt="" onclick="calenderShow()"
+          /></a>
+          <a href="#"
+            ><img
+              src="/assets/img/Vector (2).png"
+              alt=""
+              onclick="homeShow()"
+              class="home"
+          /></a>
+          <a href="#"
+            ><img src="/assets/img/burger.png" alt="" onclick="settingShow()"
+          /></a>
         </div>
       </div>
     </div>
@@ -113,9 +310,18 @@
       <header>
         <button class="back-btn" onclick="homeShow()"><- Home</button>
       </header>
-      <img src="/mbproject/assets/img/Frame 3 (1).png" alt="Bunny Image" class="bunny-image">
+      <img
+        src="/assets/img/Frame 3 (1).png"
+        alt="Bunny Image"
+        class="bunny-image"
+      />
       <div class="profile">
-        <img class="avatar" id="userAvatar" src="/mbproject/assets/img/profull.png" alt="Profile">
+        <img
+          class="avatar"
+          id="userAvatar"
+          src="/assets/img/profull.png"
+          alt="Profile"
+        />
         <div class="info">
           <h3 id="userName">User name</h3>
         </div>
@@ -124,63 +330,445 @@
       <ul class="menu-list">
         <li>
           <span href="#">
-            <img src="/mbproject/assets/img/s2.noti.png" class="icon"> Notifications
+            <img src="/assets/img/s2.noti.png" class="icon" /> Notifications
           </span>
           <label class="switch">
-            <input type="checkbox" id="notificationSwitch">
+            <input type="checkbox" id="notificationSwitch" />
             <span class="slider"></span>
           </label>
         </li>
-        <div id="notificationForm" class="notification-form" style="display: none;">
+        <div
+          id="notificationForm"
+          class="notification-form"
+          style="display: none"
+        >
           <label for="notificationTime">Select Time:</label>
           <input type="time" id="notificationTime" />
           <button type="button">Save Time</button>
         </div>
-        <div id="notificationAlert" class="notification-alert" style="display: none;">
+        <div
+          id="notificationAlert"
+          class="notification-alert"
+          style="display: none"
+        >
           การแจ้งเตือนของคุณได้ถูกตั้งเวลาแล้ว!
         </div>
         <li>
           <a href="custo.html">
-            <img src="/mbproject/assets/img/s2.custom.png" class="icon"> Customization
+            <img src="/assets/img/s2.custom.png" class="icon" /> Customization
             <span class="arrow">></span>
           </a>
         </li>
         <li>
           <span>
-            <img src="/mbproject/assets/img/s2.passcode.png" class="icon"> Passcode
+            <img src="/assets/img/s2.passcode.png" class="icon" /> Passcode
           </span>
           <label class="switch">
-            <input type="checkbox" id="passcode-toggle">
+            <input type="checkbox" id="passcode-toggle" />
             <span class="slider"></span>
           </label>
         </li>
       </ul>
       <div id="passcode-modal" class="modal">
         <div class="modal-content">
-            <h4>New Passcode</h4>
-            <label for="new-passcode">Enter 4 Number:</label>
-            <input type="tel" id="new-passcode" maxlength="4" placeholder="####" readonly>
-            <div class="number-pad">
-                <button class="number" data-number="1">1</button>
-                <button class="number" data-number="2">2</button>
-                <button class="number" data-number="3">3</button>
-                <button class="number" data-number="4">4</button>
-                <button class="number" data-number="5">5</button>
-                <button class="number" data-number="6">6</button>
-                <button class="number" data-number="7">7</button>
-                <button class="number" data-number="8">8</button>
-                <button class="number" data-number="9">9</button>
-                <button id="zero" class="number" data-number="0">0</button> <!-- ปุ่มเลข 0 -->
-                <button id="clear" class="number">c</button>
-            </div>
-                    <!-- แยกปุ่ม "บันทึก" และ "ยกเลิก" ออกมาในส่วนที่แยกต่างหาก -->
-        <div class="modal-actions">
+          <h4>New Passcode</h4>
+          <label for="new-passcode">Enter 4 Number:</label>
+          <input
+            type="tel"
+            id="new-passcode"
+            maxlength="4"
+            placeholder="####"
+            readonly
+          />
+          <div class="number-pad">
+            <button class="number" data-number="1">1</button>
+            <button class="number" data-number="2">2</button>
+            <button class="number" data-number="3">3</button>
+            <button class="number" data-number="4">4</button>
+            <button class="number" data-number="5">5</button>
+            <button class="number" data-number="6">6</button>
+            <button class="number" data-number="7">7</button>
+            <button class="number" data-number="8">8</button>
+            <button class="number" data-number="9">9</button>
+            <button id="zero" class="number" data-number="0">0</button>
+            <!-- ปุ่มเลข 0 -->
+            <button id="clear" class="number">c</button>
+          </div>
+          <!-- แยกปุ่ม "บันทึก" และ "ยกเลิก" ออกมาในส่วนที่แยกต่างหาก -->
+          <div class="modal-actions">
             <button id="save-passcode">save</button>
             <button id="cancel-passcode">cancle</button>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-    </div>
-    
-</body>
+    <script>
+      let currentEmojiIndex =
+        parseInt(localStorage.getItem("currentEmojiIndex")) || 0;
+
+      function calenderShow() {
+        console.log("calenderShow called");
+        document.getElementById("homePage").classList.add("hidden");
+        document.getElementById("homePage").classList.remove("visible");
+        document.getElementById("calendarPage").classList.remove("hidden");
+        document.getElementById("calendarPage").classList.add("visible");
+      }
+
+      function homeShow() {
+        console.log("homeShow called");
+        document.getElementById("calendarPage").classList.add("hidden");
+        document.getElementById("calendarPage").classList.remove("visible");
+        document.getElementById("settingPage").classList.add("hidden");
+        document.getElementById("settingPage").classList.remove("visible");
+        document.getElementById("homePage").classList.remove("hidden");
+        document.getElementById("homePage").classList.add("visible");
+      }
+
+      function settingShow() {
+        console.log("sittingShow called");
+        document.getElementById("homePage").classList.add("hidden");
+        document.getElementById("homePage").classList.remove("visible");
+        document.getElementById("calendarPage").classList.add("hidden");
+        document.getElementById("calendarPage").classList.remove("visible");
+        document.getElementById("settingPage").classList.remove("hidden");
+        document.getElementById("settingPage").classList.add("visible");
+      }
+
+      function showMood() {
+        document.getElementById("emojiOverlay").style.display = "flex";
+      }
+
+      function closeOverlay() {
+        document.getElementById("emojiOverlay").style.display = "none";
+      }
+
+      function selectEmoji(emoji) {
+        document.getElementById("showEmoji").src = `/assets/img/${emoji}`;
+        const messages = emojiMessages[emoji];
+        if (messages) {
+          const randomMessage =
+            messages[Math.floor(Math.random() * messages.length)];
+          document.getElementById("showSupport").innerText = randomMessage;
+        }
+        updateMonthEmoji(emoji);
+        closeOverlay(); // Close the overlay after selecting an emoji
+      }
+
+      function updateMonthEmoji(emoji) {
+        const monthEmojis = document.querySelectorAll(".grid-emoji");
+        const date = new Date();
+        const day = date.getDate();
+        const daysInMonth = new Date(
+          date.getFullYear(),
+          date.getMonth() + 1,
+          0
+        ).getDate();
+
+        // Set the emoji for the current day
+        monthEmojis[day - 1].src = `/assets/img/${emoji}`;
+        localStorage.setItem(`emoji_${day}`, emoji);
+
+        // Reset all monthEmojis to the initial image at the end of the month
+        if (day === daysInMonth) {
+          setTimeout(() => {
+            resetMonthEmojis();
+            currentEmojiIndex = 0;
+            localStorage.setItem("currentEmojiIndex", currentEmojiIndex);
+          }, 24 * 60 * 60 * 1000); // Reset at midnight
+        } else {
+          currentEmojiIndex = day;
+          localStorage.setItem("currentEmojiIndex", currentEmojiIndex);
+        }
+      }
+
+      function resetMonthEmojis() {
+        const monthEmojis = document.querySelectorAll(".grid-emoji");
+        monthEmojis.forEach((emoji, index) => {
+          emoji.src = "/assets/img/Frame 2.png";
+          localStorage.removeItem(`emoji_${index + 1}`);
+        });
+      }
+
+      function loadEmojis() {
+        const monthEmojis = document.querySelectorAll(".grid-emoji");
+        monthEmojis.forEach((emoji, index) => {
+          const savedEmoji = localStorage.getItem(`emoji_${index + 1}`);
+          if (savedEmoji) {
+            emoji.src = `/assets/img/${savedEmoji}`;
+          }
+        });
+      }
+
+      // Array of image paths
+      const images = [
+        "https://cdn.discordapp.com/attachments/1332368161315491941/1345791444094287902/ANGRY_emo.png?ex=67c5d573&is=67c483f3&hm=30bc417340344423b05fd2774c6f23017c50419805ef54d87d38bba8749b4cc1&",
+        "https://cdn.discordapp.com/attachments/1332368161315491941/1345791444350144552/anxi_emo.png?ex=67c5d573&is=67c483f3&hm=0013e9b86a2cdd4e4deae057f96455b1b1c445cebd516b45f2bb9a29e849b117&",
+        // '/assets/img/Front_Challenge_card (2).png',
+        // '/assets/img/Front_Challenge_card (3).png',
+        // '/assets/img/Front_Challenge_card (4).png',
+        // '/assets/img/Front_Challenge_card (5).png'
+      ];
+
+      // Function to get a random image from the array
+      function getRandomImage() {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        return images[randomIndex];
+      }
+
+      // Function to update the image at a specified interval
+      function updateImageAtInterval(interval) {
+        const flashCard = document.getElementById("flashCard");
+        setInterval(() => {
+          const newImage = getRandomImage();
+          flashCard.src = newImage;
+          localStorage.setItem("flashCardImage", newImage);
+        }, interval);
+      }
+
+      // Function to set the initial image from localStorage or a random image
+      function setInitialImage() {
+        const flashCard = document.getElementById("flashCard");
+        const savedImage = localStorage.getItem("flashCardImage");
+        if (savedImage) {
+          flashCard.src = savedImage;
+        } else {
+          const newImage = getRandomImage();
+          flashCard.src = newImage;
+          localStorage.setItem("flashCardImage", newImage);
+        }
+      }
+
+      // Function to update the day and month
+      function updateDate() {
+        const date = new Date();
+        const day = date.getDate();
+        const month = date
+          .toLocaleString("default", { month: "short" })
+          .toUpperCase();
+        const fullMonth = date.toLocaleString("default", { month: "long" });
+        document.getElementById("numDay").innerText = day;
+        document.getElementById("numMonth").innerText = month;
+        const previousMonth = localStorage.getItem("previousMonth");
+        if (previousMonth !== fullMonth) {
+          resetMonthEmojis();
+          localStorage.setItem("previousMonth", fullMonth);
+        }
+        document.getElementById("numMonths").innerText = fullMonth;
+      }
+
+      // Call the function to update the date on page load
+      window.onload = () => {
+        updateDate();
+        setInitialImage();
+        loadEmojis();
+        const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+        updateImageAtInterval(oneDayInMilliseconds);
+        setInterval(() => {
+          // Update the emoji for the current day
+          const currentEmoji = document
+            .getElementById("showEmoji")
+            .src.split("/")
+            .pop();
+          updateMonthEmoji(currentEmoji);
+        }, oneDayInMilliseconds);
+      };
+
+      // Function to flip the card
+      function flipCard() {
+        const card = document.getElementById("card");
+        card.classList.toggle("flipped");
+        updateImage();
+      }
+
+      const emojiMessages = {
+        "happy_emo.png": [
+          "I'm here for you na ja",
+          "Stay strong!",
+          "You got this!",
+          "Keep smiling!",
+        ],
+        "anxi_emo.png": [
+          "It's okay to feel anxious",
+          "Take a deep breath",
+          "You are not alone",
+          "Stay calm",
+        ],
+        "ANGRY_emo.png": [
+          "It's okay to feel angry",
+          "Take a moment to cool down",
+          "You are in control",
+          "Stay composed",
+        ],
+        "ennui_emo.png": [
+          "Feeling bored is normal",
+          "Find something fun to do",
+          "Stay engaged",
+          "Keep exploring",
+        ],
+      };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const passcodeToggle = document.getElementById("passcode-toggle");
+        const passcodeModal = document.getElementById("passcode-modal");
+        const passcodeInput = document.getElementById("new-passcode");
+        const savePasscodeBtn = document.getElementById("save-passcode");
+        const cancelPasscodeBtn = document.getElementById("cancel-passcode");
+        const deletePasscodeBtn = document.createElement("button");
+        deletePasscodeBtn.id = "delete-passcode";
+        deletePasscodeBtn.textContent = "Delete Passcode";
+
+        // เช็คว่ามีรหัสผ่านใน localStorage หรือไม่
+        if (localStorage.getItem("passcode")) {
+          passcodeToggle.checked = true;
+        } else {
+          passcodeToggle.checked = false;
+        }
+
+        passcodeToggle.addEventListener("change", function () {
+          if (this.checked) {
+            passcodeModal.style.display = "block";
+          } else {
+            localStorage.removeItem("passcode");
+            localStorage.setItem("passcodeEnabled", "false");
+            alert("Passcode ถูกปิดแล้ว");
+            passcodeToggle.checked = false;
+          }
+        });
+
+        savePasscodeBtn.addEventListener("click", function () {
+          if (passcodeInput.value.length === 4) {
+            localStorage.setItem("passcode", passcodeInput.value);
+            localStorage.setItem("passcodeEnabled", "true");
+            alert("รหัสผ่านถูกบันทึกแล้ว!");
+            passcodeModal.style.display = "none";
+          } else {
+            alert("กรุณากรอกรหัสผ่าน 4 หลัก");
+          }
+        });
+
+        cancelPasscodeBtn.addEventListener("click", function () {
+          passcodeModal.style.display = "none";
+          passcodeToggle.checked = false;
+        });
+
+        deletePasscodeBtn.addEventListener("click", function () {
+          localStorage.removeItem("passcode");
+          localStorage.setItem("passcodeEnabled", "false");
+          alert("รหัสผ่านถูกลบแล้ว!");
+          passcodeModal.style.display = "none";
+          passcodeToggle.checked = false;
+        });
+
+        document.querySelector(".modal-content").appendChild(deletePasscodeBtn);
+
+        // เพิ่มฟังก์ชันให้กดตัวเลขแล้วขึ้นที่หน้าจอ
+        const numberButtons = document.querySelectorAll(".number");
+        const clearButton = document.getElementById("clear");
+
+        numberButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            if (passcodeInput.value.length < 4) {
+              passcodeInput.value += this.dataset.number;
+            }
+          });
+        });
+
+        clearButton.addEventListener("click", function () {
+          passcodeInput.value = "";
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const notificationSwitch =
+          document.getElementById("notificationSwitch");
+        const notificationForm = document.getElementById("notificationForm");
+        const notificationTimeInput =
+          document.getElementById("notificationTime");
+        const saveNotificationBtn = document.querySelector(
+          "#notificationForm button"
+        );
+        const notificationAlert = document.getElementById("notificationAlert");
+
+        // โหลดค่าที่บันทึกไว้
+        if (localStorage.getItem("notificationEnabled") === "true") {
+          notificationSwitch.checked = true;
+          notificationForm.style.display = "block";
+        } else {
+          notificationForm.style.display = "none";
+        }
+
+        if (localStorage.getItem("notificationTime")) {
+          notificationTimeInput.value =
+            localStorage.getItem("notificationTime");
+        }
+
+        // เปิด/ปิดฟอร์มแจ้งเตือน
+        notificationSwitch.addEventListener("change", function () {
+          if (this.checked) {
+            notificationForm.style.display = "block";
+            localStorage.setItem("notificationEnabled", "true");
+          } else {
+            notificationForm.style.display = "none";
+            localStorage.setItem("notificationEnabled", "false");
+          }
+        });
+
+        // บันทึกเวลาแจ้งเตือน
+        saveNotificationBtn.addEventListener("click", function () {
+          const timeValue = notificationTimeInput.value;
+          if (timeValue) {
+            localStorage.setItem("notificationTime", timeValue);
+            notificationAlert.style.display = "block";
+            setTimeout(() => {
+              notificationAlert.style.display = "none";
+            }, 3000);
+          } else {
+            alert("กรุณาเลือกเวลาที่ต้องการแจ้งเตือน");
+          }
+        });
+
+        // ฟังก์ชันแจ้งเตือนเมื่อถึงเวลาที่ตั้งไว้
+        function checkNotificationTime() {
+          const savedTime = localStorage.getItem("notificationTime");
+          if (!savedTime) return;
+
+          const now = new Date();
+          const [savedHour, savedMinute] = savedTime.split(":").map(Number);
+
+          if (
+            now.getHours() === savedHour &&
+            now.getMinutes() === savedMinute
+          ) {
+            showNotification();
+          }
+        }
+
+        // ฟังก์ชันแจ้งเตือน (เสียง + การแจ้งเตือน)
+        function showNotification() {
+          // ใช้ Notification API
+          if (Notification.permission === "granted") {
+            new Notification("⏰ แจ้งเตือน!", {
+              body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!",
+            });
+          } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then((permission) => {
+              if (permission === "granted") {
+                new Notification("⏰ แจ้งเตือน!", {
+                  body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!",
+                });
+              }
+            });
+          }
+        }
+
+        // ขออนุญาตแจ้งเตือนเมื่อโหลดหน้าเว็บ
+        if (Notification.permission !== "granted") {
+          Notification.requestPermission();
+        }
+
+        // ตรวจสอบแจ้งเตือนทุก 30 วินาที
+        setInterval(checkNotificationTime, 30000);
+      });
+    </script>
+  </body>
 </html>
