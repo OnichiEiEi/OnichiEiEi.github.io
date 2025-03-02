@@ -36,9 +36,20 @@ function closeOverlay() {
     document.getElementById('emojiOverlay').style.display = 'none';
 }
 
+// Example usage
+loadFromMongoDB('flashCardImage', (value) => {
+    if (value) {
+        console.log('Loaded value:', value);
+    } else {
+        console.log('No value found');
+    }
+});
+
+saveToMongoDB('flashCardImage', 'assets/img/Front_Challenge_card.png');
+
 async function loadFromMongoDB(key, callback) {
     try {
-        const response = await fetch(`http://localhost:8000/load/${key}`);
+        const response = await fetch(`http://10.26.1.199:8000/load/${key}`);
         if (response.ok) {
             const value = await response.json();
             callback(value);
@@ -54,7 +65,7 @@ async function loadFromMongoDB(key, callback) {
 
 async function saveToMongoDB(key, value) {
     try {
-        const response = await fetch('http://localhost:8000/save', {
+        const response = await fetch(`http://10.26.1.199:8000/save`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
