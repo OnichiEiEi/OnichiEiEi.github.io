@@ -370,4 +370,22 @@ document.addEventListener("DOMContentLoaded", function () {
       // ตรวจสอบแจ้งเตือนทุก 30 วินาที
       setInterval(checkNotificationTime, 30000);
   });
+
+async function fetchCurrentEmojiIndex() {
+    try {
+        const response = await fetch("https://onichi-ei-ei-github-io-a8yt.vercel.app/load/currentEmojiIndex");
+        
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log("Current Emoji Index:", data);
+    } catch (error) {
+        console.error("Error fetching current emoji index:", error);
+    }
+}
+
+fetchCurrentEmojiIndex();
+
   
