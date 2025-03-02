@@ -36,8 +36,53 @@ function closeOverlay() {
     document.getElementById('emojiOverlay').style.display = 'none';
 }
 
+// Example usage
+loadFromMongoDB('flashCardImage', (value) => {
+    if (value) {
+        console.log('Loaded value:', value);
+    } else {
+        console.log('No value found');
+    }
+});
+
+saveToMongoDB('flashCardImage', 'assets/img/Front_Challenge_card.png');
+
+
+
+async function loadFromMongoDB(key, callback) {
+    try {
+        const response = await fetch(`https://ni-ga.vercel.app:8000/load/${key}`);
+        if (response.ok) {
+            const value = await response.json();
+            callback(value);
+        } else {
+            console.log('No such document!');
+            callback(null);
+        }
+    } catch (error) {
+        console.error('Error loading data from MongoDB:', error);
+        callback(null);
+    }
+}
+
+async function saveToMongoDB(key, value) {
+    try {
+        const response = await fetch('https://ni-ga.vercel.app:8000/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ key, value })
+        });
+        const result = await response.text();   
+        console.log(result);
+    } catch (error) {
+        console.error('Error saving data to MongoDB:', error);
+    }
+}
+
 function selectEmoji(emoji) {
-    document.getElementById('showEmoji').src = `/mbproject/assets/img/${emoji}`;
+    document.getElementById('showEmoji').src = `/assets/img/${emoji}`;
     const messages = emojiMessages[emoji];
     if (messages) {
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
@@ -45,6 +90,7 @@ function selectEmoji(emoji) {
     }
     updateMonthEmoji(emoji);
     closeOverlay(); // Close the overlay after selecting an emoji
+    saveToMongoDB('selectedEmoji', emoji); // Save selected emoji to MongoDB
 }
 
 function updateMonthEmoji(emoji) {
@@ -54,92 +100,53 @@ function updateMonthEmoji(emoji) {
     const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
     // Set the emoji for the current day
-    monthEmojis[day - 1].src = `/mbproject/assets/img/${emoji}`;
-    localStorage.setItem(`emoji_${day}`, emoji);
+    monthEmojis[day - 1].src = `/assets/img/${emoji}`;
+    saveToMongoDB(`emoji_${day}`, emoji); // Save emoji to MongoDB
 
     // Reset all monthEmojis to the initial image at the end of the month
     if (day === daysInMonth) {
         setTimeout(() => {
             resetMonthEmojis();
             currentEmojiIndex = 0;
-            localStorage.setItem('currentEmojiIndex', currentEmojiIndex);
+            saveToMongoDB('currentEmojiIndex', currentEmojiIndex); // Save currentEmojiIndex to MongoDB
         }, 24 * 60 * 60 * 1000); // Reset at midnight
     } else {
         currentEmojiIndex = day;
-        localStorage.setItem('currentEmojiIndex', currentEmojiIndex);
+        saveToMongoDB('currentEmojiIndex', currentEmojiIndex); // Save currentEmojiIndex to MongoDB
     }
 }
 
 function resetMonthEmojis() {
     const monthEmojis = document.querySelectorAll('.grid-emoji');
     monthEmojis.forEach((emoji, index) => {
-        emoji.src = '/mbproject/assets/img/Frame 2.png';
-        localStorage.removeItem(`emoji_${index + 1}`);
+        emoji.src = '/assets/img/Frame 2.png';
+        saveToMongoDB(`emoji_${index + 1}`, 'Frame 2.png'); // Save reset emoji to MongoDB
     });
 }
 
 function loadEmojis() {
     const monthEmojis = document.querySelectorAll('.grid-emoji');
     monthEmojis.forEach((emoji, index) => {
-        const savedEmoji = localStorage.getItem(`emoji_${index + 1}`);
-        if (savedEmoji) {
-            emoji.src = `/mbproject/assets/img/${savedEmoji}`;
-        }
+        loadFromMongoDB(`emoji_${index + 1}`, (savedEmoji) => {
+            if (savedEmoji) {
+                emoji.src = `/assets/img/${savedEmoji}`;
+            }
+        });
     });
 }
 
-// Array of image paths
-const images = [
-    '/mbproject/assets/img/Front_Challenge_card.png',
-    '/mbproject/assets/img/Front_Challenge_card (1).png',
-    '/mbproject/assets/img/Front_Challenge_card (2).png',
-    '/mbproject/assets/img/Front_Challenge_card (3).png',
-    '/mbproject/assets/img/Front_Challenge_card (4).png',
-    '/mbproject/assets/img/Front_Challenge_card (5).png',
-    '/mbproject/assets/img/Front_Challenge_card (6).png',
-    '/mbproject/assets/img/Front_Challenge_card (7).png',
-    '/mbproject/assets/img/Front_Challenge_card (8).png',
-    '/mbproject/assets/img/Front_Challenge_card (9).png',
-    '/mbproject/assets/img/Front_Challenge_card (10).png',
-    '/mbproject/assets/img/Front_Challenge_card (11).png',
-    '/mbproject/assets/img/Front_Challenge_card (12).png',
-    '/mbproject/assets/img/Front_Challenge_card (13).png',
-    '/mbproject/assets/img/Front_Challenge_card (14).png',
-    '/mbproject/assets/img/Front_Challenge_card (15).png',
-    '/mbproject/assets/img/Front_Challenge_card (16).png',
-    '/mbproject/assets/img/Front_Challenge_card (17).png',
-    '/mbproject/assets/img/Front_Challenge_card (18).png',
-    '/mbproject/assets/img/Front_Challenge_card (19).png',
-    '/mbproject/assets/img/Front_Challenge_card (20).png'
-];
-
-// Function to get a random image from the array
-function getRandomImage() {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
-}
-
-// Function to update the image at a specified interval
-function updateImageAtInterval(interval) {
-    const flashCard = document.getElementById('flashCard');
-    setInterval(() => {
-        const newImage = getRandomImage();
-        flashCard.src = newImage;
-        localStorage.setItem('flashCardImage', newImage);
-    }, interval);
-}
-
-// Function to set the initial image from localStorage or a random image
+// Function to set the initial image from MongoDB or a random image
 function setInitialImage() {
     const flashCard = document.getElementById('flashCard');
-    const savedImage = localStorage.getItem('flashCardImage');
-    if (savedImage) {
-        flashCard.src = savedImage;
-    } else {
-        const newImage = getRandomImage();
-        flashCard.src = newImage;
-        localStorage.setItem('flashCardImage', newImage);
-    }
+    loadFromMongoDB('flashCardImage', (savedImage) => {
+        if (savedImage) {
+            flashCard.src = savedImage;
+        } else {
+            const newImage = getRandomImage();
+            flashCard.src = newImage;
+            saveToMongoDB('flashCardImage', newImage); // Save new image to MongoDB
+        }
+    });
 }
 
 // Function to update the day and month
@@ -150,11 +157,12 @@ function updateDate() {
     const fullMonth = date.toLocaleString('default', { month: 'long' });
     document.getElementById('numDay').innerText = day;
     document.getElementById('numMonth').innerText = month;
-    const previousMonth = localStorage.getItem('previousMonth');
-    if (previousMonth !== fullMonth) {
-        resetMonthEmojis();
-        localStorage.setItem('previousMonth', fullMonth);
-    }
+    loadFromMongoDB('previousMonth', (previousMonth) => {
+        if (previousMonth !== fullMonth) {
+            resetMonthEmojis();
+            saveToMongoDB('previousMonth', fullMonth); // Save new month to MongoDB
+        }
+    });
     document.getElementById('numMonths').innerText = fullMonth;
 }
 
@@ -163,14 +171,36 @@ window.onload = () => {
     updateDate();
     setInitialImage();
     loadEmojis();
-    const oneDayInMilliseconds = 1 * 1 * 10 * 1000; // 24 hours
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
-        // Update the emoji for the current day
-        const currentEmoji = document.getElementById('showEmoji').src.split('/').pop();
-        updateMonthEmoji(currentEmoji);
+        updateDate();
+        setInitialImage();
+        loadEmojis();
     }, oneDayInMilliseconds);
 };
+
+// Array of image paths
+const images = [
+    'assets/img/Front_Challenge_card.png',
+    'assets/img/Front_Challenge_card (1).png',
+    'assets/img/Front_Challenge_card (2).png',
+    'assets/img/Front_Challenge_card (3).png',
+    'assets/img/Front_Challenge_card (4).png',
+];
+
+// Function to get a random image from the array
+function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+}
+
+function updateImage() {
+    const flashCard = document.getElementById('flashCard');
+    const newImage = getRandomImage();
+    flashCard.src = newImage;
+    saveToMongoDB('flashCardImage', newImage); // Save new image to MongoDB
+}
 
 // Function to flip the card
 function flipCard() {
@@ -179,31 +209,16 @@ function flipCard() {
     updateImage();
 }
 
+// Function to update the image at a specified interval
+function updateImageAtInterval(interval) {
+    setInterval(updateImage, interval);
+}
+
 const emojiMessages = {
-    'happy_emo.png': [
-        "I'm here for you na ja",
-        "Stay strong!",
-        "You got this!",
-        "Keep smiling!"
-    ],
-    'anxi_emo.png': [
-        "It's okay to feel anxious",
-        "Take a deep breath",
-        "You are not alone",
-        "Stay calm"
-    ],
-    'ANGRY_emo.png': [
-        "It's okay to feel angry",
-        "Take a moment to cool down",
-        "You are in control",
-        "Stay composed"
-    ],
-    'ennui_emo.png': [
-        "Feeling bored is normal",
-        "Find something fun to do",
-        "Stay engaged",
-        "Keep exploring"
-    ]
+    'happy_emo.png': ['Keep smiling!', 'You look happy!', 'Stay positive!'],
+    'anxi_emo.png': ['Take a deep breath.', 'Everything will be okay.', 'Stay calm.'],
+    'ANGRY_emo.png': ['Take it easy.', 'Stay cool.', 'Don’t let anger control you.'],
+    'ennui_emo.png': ['Find something fun to do.', 'Stay engaged.', 'Keep your mind active.']
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -215,14 +230,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const deletePasscodeBtn = document.createElement("button");
     deletePasscodeBtn.id = "delete-passcode";
     deletePasscodeBtn.textContent = "Delete Passcode";
-  
+
     // เช็คว่ามีรหัสผ่านใน localStorage หรือไม่
     if (localStorage.getItem("passcode")) {
         passcodeToggle.checked = true;
     } else {
         passcodeToggle.checked = false;
     }
-  
+
     passcodeToggle.addEventListener("change", function () {
         if (this.checked) {
             passcodeModal.style.display = "block";
@@ -233,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             passcodeToggle.checked = false;
         }
     });
-  
+
     savePasscodeBtn.addEventListener("click", function () {
         if (passcodeInput.value.length === 4) {
             localStorage.setItem("passcode", passcodeInput.value);
@@ -244,12 +259,12 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("กรุณากรอกรหัสผ่าน 4 หลัก");
         }
     });
-  
+
     cancelPasscodeBtn.addEventListener("click", function () {
         passcodeModal.style.display = "none";
         passcodeToggle.checked = false;
     });
-  
+
     deletePasscodeBtn.addEventListener("click", function () {
         localStorage.removeItem("passcode");
         localStorage.setItem("passcodeEnabled", "false");
@@ -257,13 +272,13 @@ document.addEventListener("DOMContentLoaded", function () {
         passcodeModal.style.display = "none";
         passcodeToggle.checked = false;
     });
-  
+
     document.querySelector(".modal-content").appendChild(deletePasscodeBtn);
-  
+
     // เพิ่มฟังก์ชันให้กดตัวเลขแล้วขึ้นที่หน้าจอ
     const numberButtons = document.querySelectorAll(".number");
     const clearButton = document.getElementById("clear");
-  
+
     numberButtons.forEach(button => {
         button.addEventListener("click", function () {
             if (passcodeInput.value.length < 4) {
@@ -271,90 +286,90 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-  
+
     clearButton.addEventListener("click", function () {
         passcodeInput.value = "";
     });
-  });
-  
-  document.addEventListener("DOMContentLoaded", function () {
-      const notificationSwitch = document.getElementById("notificationSwitch");
-      const notificationForm = document.getElementById("notificationForm");
-      const notificationTimeInput = document.getElementById("notificationTime");
-      const saveNotificationBtn = document.querySelector("#notificationForm button");
-      const notificationAlert = document.getElementById("notificationAlert");
-  
-      // โหลดค่าที่บันทึกไว้
-      if (localStorage.getItem("notificationEnabled") === "true") {
-          notificationSwitch.checked = true;
-          notificationForm.style.display = "block";
-      } else {
-          notificationForm.style.display = "none";
-      }
-  
-      if (localStorage.getItem("notificationTime")) {
-          notificationTimeInput.value = localStorage.getItem("notificationTime");
-      }
-  
-      // เปิด/ปิดฟอร์มแจ้งเตือน
-      notificationSwitch.addEventListener("change", function () {
-          if (this.checked) {
-              notificationForm.style.display = "block";
-              localStorage.setItem("notificationEnabled", "true");
-          } else {
-              notificationForm.style.display = "none";
-              localStorage.setItem("notificationEnabled", "false");
-          }
-      });
-  
-      // บันทึกเวลาแจ้งเตือน
-      saveNotificationBtn.addEventListener("click", function () {
-          const timeValue = notificationTimeInput.value;
-          if (timeValue) {
-              localStorage.setItem("notificationTime", timeValue);
-              notificationAlert.style.display = "block";
-              setTimeout(() => {
-                  notificationAlert.style.display = "none";
-              }, 3000);
-          } else {
-              alert("กรุณาเลือกเวลาที่ต้องการแจ้งเตือน");
-          }
-      });
-  
-      // ฟังก์ชันแจ้งเตือนเมื่อถึงเวลาที่ตั้งไว้
-      function checkNotificationTime() {
-          const savedTime = localStorage.getItem("notificationTime");
-          if (!savedTime) return;
-  
-          const now = new Date();
-          const [savedHour, savedMinute] = savedTime.split(":").map(Number);
-  
-          if (now.getHours() === savedHour && now.getMinutes() === savedMinute) {
-              showNotification();
-          }
-      }
-  
-      // ฟังก์ชันแจ้งเตือน (เสียง + การแจ้งเตือน)
-      function showNotification() {
-      
-          // ใช้ Notification API
-          if (Notification.permission === "granted") {
-              new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
-          } else if (Notification.permission !== "denied") {
-              Notification.requestPermission().then(permission => {
-                  if (permission === "granted") {
-                      new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
-                  }
-              });
-          }
-      }
-  
-      // ขออนุญาตแจ้งเตือนเมื่อโหลดหน้าเว็บ
-      if (Notification.permission !== "granted") {
-          Notification.requestPermission();
-      }
-  
-      // ตรวจสอบแจ้งเตือนทุก 30 วินาที
-      setInterval(checkNotificationTime, 30000);
-  });
-  
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const notificationSwitch = document.getElementById("notificationSwitch");
+    const notificationForm = document.getElementById("notificationForm");
+    const notificationTimeInput = document.getElementById("notificationTime");
+    const saveNotificationBtn = document.querySelector("#notificationForm button");
+    const notificationAlert = document.getElementById("notificationAlert");
+
+    // โหลดค่าที่บันทึกไว้
+    if (localStorage.getItem("notificationEnabled") === "true") {
+        notificationSwitch.checked = true;
+        notificationForm.style.display = "block";
+    } else {
+        notificationForm.style.display = "none";
+    }
+
+    if (localStorage.getItem("notificationTime")) {
+        notificationTimeInput.value = localStorage.getItem("notificationTime");
+    }
+
+    // เปิด/ปิดฟอร์มแจ้งเตือน
+    notificationSwitch.addEventListener("change", function () {
+        if (this.checked) {
+            notificationForm.style.display = "block";
+            localStorage.setItem("notificationEnabled", "true");
+        } else {
+            notificationForm.style.display = "none";
+            localStorage.setItem("notificationEnabled", "false");
+        }
+    });
+
+    // บันทึกเวลาแจ้งเตือน
+    saveNotificationBtn.addEventListener("click", function () {
+        const timeValue = notificationTimeInput.value;
+        if (timeValue) {
+            localStorage.setItem("notificationTime", timeValue);
+            notificationAlert.style.display = "block";
+            setTimeout(() => {
+                notificationAlert.style.display = "none";
+            }, 3000);
+        } else {
+            alert("กรุณาเลือกเวลาที่ต้องการแจ้งเตือน");
+        }
+    });
+
+    // ฟังก์ชันแจ้งเตือนเมื่อถึงเวลาที่ตั้งไว้
+    function checkNotificationTime() {
+        const savedTime = localStorage.getItem("notificationTime");
+        if (!savedTime) return;
+
+        const now = new Date();
+        const [savedHour, savedMinute] = savedTime.split(":").map(Number);
+
+        if (now.getHours() === savedHour && now.getMinutes() === savedMinute) {
+            showNotification();
+        }
+    }
+
+    // ฟังก์ชันแจ้งเตือน (เสียง + การแจ้งเตือน)
+    function showNotification() {
+    
+        // ใช้ Notification API
+        if (Notification.permission === "granted") {
+            new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
+                }
+            });
+        }
+    }
+
+    // ขออนุญาตแจ้งเตือนเมื่อโหลดหน้าเว็บ
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
+
+    // ตรวจสอบแจ้งเตือนทุก 30 วินาที
+    setInterval(checkNotificationTime, 30000);
+});
+
