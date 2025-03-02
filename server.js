@@ -1,14 +1,14 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require('cors'); // นำเข้าแพ็กเกจ cors
 
 const app = express();
 const port = 8000;
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors()); // ใช้ middleware cors
 
 const uri = "mongodb+srv://66010395:200412@test.8gpmp.mongodb.net/?retryWrites=true&w=majority&appName=test";
 const client = new MongoClient(uri, {
@@ -62,6 +62,6 @@ app.get('/load/:key', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => { // ฟังที่ทุก IP Address
+  console.log(`Server running at http://0.0.0.0:${port}`);
 });
