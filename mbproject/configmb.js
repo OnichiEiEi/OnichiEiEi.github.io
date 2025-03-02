@@ -95,7 +95,32 @@ const images = [
     '/assets/img/Front_Challenge_card (2).png',
     '/assets/img/Front_Challenge_card (3).png',
     '/assets/img/Front_Challenge_card (4).png',
-    '/assets/img/Front_Challenge_card (5).png'
+    '/assets/img/Front_Challenge_card (5).png',
+    '/assets/img/Front_Challenge_card (6).png',
+    '/assets/img/Front_Challenge_card (7).png',
+    '/assets/img/Front_Challenge_card (8).png',
+    '/assets/img/Front_Challenge_card (9).png',
+    '/assets/img/Front_Challenge_card (10).png',
+    '/assets/img/Front_Challenge_card (11).png',
+    '/assets/img/Front_Challenge_card (12).png',
+    '/assets/img/Front_Challenge_card (13).png',
+    '/assets/img/Front_Challenge_card (14).png',
+    '/assets/img/Front_Challenge_card (15).png',
+    '/assets/img/Front_Challenge_card (16).png',
+    '/assets/img/Front_Challenge_card (17).png',
+    '/assets/img/Front_Challenge_card (18).png',
+    '/assets/img/Front_Challenge_card (19).png',
+    '/assets/img/Front_Challenge_card (20).png',
+    '/assets/img/Front_Challenge_card (21).png',
+    '/assets/img/Front_Challenge_card (22).png',
+    '/assets/img/Front_Challenge_card (23).png',
+    '/assets/img/Front_Challenge_card (24).png',
+    '/assets/img/Front_Challenge_card (25).png',
+    '/assets/img/Front_Challenge_card (26).png',
+    '/assets/img/Front_Challenge_card (27).png',
+    '/assets/img/Front_Challenge_card (28).png',
+    '/assets/img/Front_Challenge_card (29).png',
+    '/assets/img/Front_Challenge_card (30).png',
 ];
 
 // Function to get a random image from the array
@@ -148,7 +173,7 @@ window.onload = () => {
     updateDate();
     setInitialImage();
     loadEmojis();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+    const oneDayInMilliseconds = 1 * 1 * 10 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
         // Update the emoji for the current day
@@ -156,6 +181,14 @@ window.onload = () => {
         updateMonthEmoji(currentEmoji);
     }, oneDayInMilliseconds);
 };
+
+// Function to update the image on the flash card
+function updateImage() {
+    const flashCard = document.getElementById('flashCard');
+    const newImage = getRandomImage();
+    flashCard.src = newImage;
+    localStorage.setItem('flashCardImage', newImage);
+}
 
 // Function to flip the card
 function flipCard() {
