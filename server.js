@@ -2,6 +2,7 @@ const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // นำเข้าแพ็กเกจ cors
+require('dotenv').config(); // โหลด environment variables จากไฟล์ .env
 
 const app = express();
 const port = 8000;
@@ -10,7 +11,7 @@ const port = 8000;
 app.use(bodyParser.json());
 app.use(cors()); // ใช้ middleware cors
 
-const uri = "mongodb+srv://66010395:200412@test.8gpmp.mongodb.net/?retryWrites=true&w=majority&appName=test";
+const uri = process.env.MONGODB_URI; // ใช้ environment variable สำหรับ MongoDB URI
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
