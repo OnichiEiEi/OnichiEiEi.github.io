@@ -36,51 +36,6 @@ function closeOverlay() {
     document.getElementById('emojiOverlay').style.display = 'none';
 }
 
-// Example usage
-loadFromMongoDB('flashCardImage', (value) => {
-    if (value) {
-        console.log('Loaded value:', value);
-    } else {
-        console.log('No value found');
-    }
-});
-
-saveToMongoDB('flashCardImage', 'assets/img/Front_Challenge_card.png');
-
-
-
-async function loadFromMongoDB(key, callback) {
-    try {
-        const response = await fetch(`https://ni-ga.vercel.app:8000/load/${key}`);
-        if (response.ok) {
-            const value = await response.json();
-            callback(value);
-        } else {
-            console.log('No such document!');
-            callback(null);
-        }
-    } catch (error) {
-        console.error('Error loading data from MongoDB:', error);
-        callback(null);
-    }
-}
-
-async function saveToMongoDB(key, value) {
-    try {
-        const response = await fetch('https://ni-ga.vercel.app:8000/save', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ key, value })
-        });
-        const result = await response.text();   
-        console.log(result);
-    } catch (error) {
-        console.error('Error saving data to MongoDB:', error);
-    }
-}
-
 function selectEmoji(emoji) {
     document.getElementById('showEmoji').src = `/assets/img/${emoji}`;
     const messages = emojiMessages[emoji];
@@ -90,7 +45,6 @@ function selectEmoji(emoji) {
     }
     updateMonthEmoji(emoji);
     closeOverlay(); // Close the overlay after selecting an emoji
-    saveToMongoDB('selectedEmoji', emoji); // Save selected emoji to MongoDB
 }
 
 function updateMonthEmoji(emoji) {
@@ -101,18 +55,18 @@ function updateMonthEmoji(emoji) {
 
     // Set the emoji for the current day
     monthEmojis[day - 1].src = `/assets/img/${emoji}`;
-    saveToMongoDB(`emoji_${day}`, emoji); // Save emoji to MongoDB
+    localStorage.setItem(`emoji_${day}`, emoji);
 
     // Reset all monthEmojis to the initial image at the end of the month
     if (day === daysInMonth) {
         setTimeout(() => {
             resetMonthEmojis();
             currentEmojiIndex = 0;
-            saveToMongoDB('currentEmojiIndex', currentEmojiIndex); // Save currentEmojiIndex to MongoDB
+            localStorage.setItem('currentEmojiIndex', currentEmojiIndex);
         }, 24 * 60 * 60 * 1000); // Reset at midnight
     } else {
         currentEmojiIndex = day;
-        saveToMongoDB('currentEmojiIndex', currentEmojiIndex); // Save currentEmojiIndex to MongoDB
+        localStorage.setItem('currentEmojiIndex', currentEmojiIndex);
     }
 }
 
@@ -120,33 +74,57 @@ function resetMonthEmojis() {
     const monthEmojis = document.querySelectorAll('.grid-emoji');
     monthEmojis.forEach((emoji, index) => {
         emoji.src = '/assets/img/Frame 2.png';
-        saveToMongoDB(`emoji_${index + 1}`, 'Frame 2.png'); // Save reset emoji to MongoDB
+        localStorage.removeItem(`emoji_${index + 1}`);
     });
 }
 
 function loadEmojis() {
     const monthEmojis = document.querySelectorAll('.grid-emoji');
     monthEmojis.forEach((emoji, index) => {
-        loadFromMongoDB(`emoji_${index + 1}`, (savedEmoji) => {
-            if (savedEmoji) {
-                emoji.src = `/assets/img/${savedEmoji}`;
-            }
-        });
+        const savedEmoji = localStorage.getItem(`emoji_${index + 1}`);
+        if (savedEmoji) {
+            emoji.src = `/assets/img/${savedEmoji}`;
+        }
     });
 }
 
-// Function to set the initial image from MongoDB or a random image
+// Array of image paths
+const images = [
+    'https://cdn.discordapp.com/attachments/1332368161315491941/1345791444094287902/ANGRY_emo.png?ex=67c5d573&is=67c483f3&hm=30bc417340344423b05fd2774c6f23017c50419805ef54d87d38bba8749b4cc1&',
+    'https://cdn.discordapp.com/attachments/1332368161315491941/1345791444350144552/anxi_emo.png?ex=67c5d573&is=67c483f3&hm=0013e9b86a2cdd4e4deae057f96455b1b1c445cebd516b45f2bb9a29e849b117&'
+    // '/assets/img/Front_Challenge_card (2).png',
+    // '/assets/img/Front_Challenge_card (3).png',
+    // '/assets/img/Front_Challenge_card (4).png',
+    // '/assets/img/Front_Challenge_card (5).png'
+];
+
+// Function to get a random image from the array
+function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+}
+
+// Function to update the image at a specified interval
+function updateImageAtInterval(interval) {
+    const flashCard = document.getElementById('flashCard');
+    setInterval(() => {
+        const newImage = getRandomImage();
+        flashCard.src = newImage;
+        localStorage.setItem('flashCardImage', newImage);
+    }, interval);
+}
+
+// Function to set the initial image from localStorage or a random image
 function setInitialImage() {
     const flashCard = document.getElementById('flashCard');
-    loadFromMongoDB('flashCardImage', (savedImage) => {
-        if (savedImage) {
-            flashCard.src = savedImage;
-        } else {
-            const newImage = getRandomImage();
-            flashCard.src = newImage;
-            saveToMongoDB('flashCardImage', newImage); // Save new image to MongoDB
-        }
-    });
+    const savedImage = localStorage.getItem('flashCardImage');
+    if (savedImage) {
+        flashCard.src = savedImage;
+    } else {
+        const newImage = getRandomImage();
+        flashCard.src = newImage;
+        localStorage.setItem('flashCardImage', newImage);
+    }
 }
 
 // Function to update the day and month
@@ -157,12 +135,11 @@ function updateDate() {
     const fullMonth = date.toLocaleString('default', { month: 'long' });
     document.getElementById('numDay').innerText = day;
     document.getElementById('numMonth').innerText = month;
-    loadFromMongoDB('previousMonth', (previousMonth) => {
-        if (previousMonth !== fullMonth) {
-            resetMonthEmojis();
-            saveToMongoDB('previousMonth', fullMonth); // Save new month to MongoDB
-        }
-    });
+    const previousMonth = localStorage.getItem('previousMonth');
+    if (previousMonth !== fullMonth) {
+        resetMonthEmojis();
+        localStorage.setItem('previousMonth', fullMonth);
+    }
     document.getElementById('numMonths').innerText = fullMonth;
 }
 
@@ -174,33 +151,11 @@ window.onload = () => {
     const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
-        updateDate();
-        setInitialImage();
-        loadEmojis();
+        // Update the emoji for the current day
+        const currentEmoji = document.getElementById('showEmoji').src.split('/').pop();
+        updateMonthEmoji(currentEmoji);
     }, oneDayInMilliseconds);
 };
-
-// Array of image paths
-const images = [
-    'assets/img/Front_Challenge_card.png',
-    'assets/img/Front_Challenge_card (1).png',
-    'assets/img/Front_Challenge_card (2).png',
-    'assets/img/Front_Challenge_card (3).png',
-    'assets/img/Front_Challenge_card (4).png',
-];
-
-// Function to get a random image from the array
-function getRandomImage() {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
-}
-
-function updateImage() {
-    const flashCard = document.getElementById('flashCard');
-    const newImage = getRandomImage();
-    flashCard.src = newImage;
-    saveToMongoDB('flashCardImage', newImage); // Save new image to MongoDB
-}
 
 // Function to flip the card
 function flipCard() {
@@ -209,16 +164,31 @@ function flipCard() {
     updateImage();
 }
 
-// Function to update the image at a specified interval
-function updateImageAtInterval(interval) {
-    setInterval(updateImage, interval);
-}
-
 const emojiMessages = {
-    'happy_emo.png': ['Keep smiling!', 'You look happy!', 'Stay positive!'],
-    'anxi_emo.png': ['Take a deep breath.', 'Everything will be okay.', 'Stay calm.'],
-    'ANGRY_emo.png': ['Take it easy.', 'Stay cool.', 'Don’t let anger control you.'],
-    'ennui_emo.png': ['Find something fun to do.', 'Stay engaged.', 'Keep your mind active.']
+    'happy_emo.png': [
+        "I'm here for you na ja",
+        "Stay strong!",
+        "You got this!",
+        "Keep smiling!"
+    ],
+    'anxi_emo.png': [
+        "It's okay to feel anxious",
+        "Take a deep breath",
+        "You are not alone",
+        "Stay calm"
+    ],
+    'ANGRY_emo.png': [
+        "It's okay to feel angry",
+        "Take a moment to cool down",
+        "You are in control",
+        "Stay composed"
+    ],
+    'ennui_emo.png': [
+        "Feeling bored is normal",
+        "Find something fun to do",
+        "Stay engaged",
+        "Keep exploring"
+    ]
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -372,4 +342,3 @@ document.addEventListener("DOMContentLoaded", function () {
     // ตรวจสอบแจ้งเตือนทุก 30 วินาที
     setInterval(checkNotificationTime, 30000);
 });
-
