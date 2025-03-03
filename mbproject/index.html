@@ -11,6 +11,32 @@
     <title>BunnyHop</title>
   </head>
   <body>
+    <div class="container hidden" id="userPage">
+      <div class="bgShow" style="width: 100%; height: auto">
+        <div class="profile">
+          <img
+            class="avatar"
+            id="userAvatar"
+            src="/assets/img/profull.png"
+            alt="Profile"
+          />
+          <div class="info">
+            <h3 id="userName">User name</h3>
+            <input
+              type="text"
+              id="inputUserName"
+              placeholder="Enter your name"
+            />
+            <button onclick="saveAccount()">Save</button>
+          </div>
+        </div>
+        <img
+          src="/assets/img/start_username.png"
+          alt=""
+          style="width: 100%; height: 100%; margin: auto; object-fit: contain"
+        />
+      </div>
+    </div>
     <div class="container" id="homePage">
       <div class="content">
         <div class="date">
@@ -430,7 +456,33 @@
     <div class="container hidden" id="showPage">
       <div class="bgShow" style="width: 100%; height: auto">
         <img
-          src="assets/img/start page.png"
+          src="/assets/img/start page.png"
+          alt=""
+          style="width: 100%; height: 100%; margin: auto; object-fit: contain"
+        />
+      </div>
+    </div>
+    <div class="contaibre hidden" id="userPage">
+      <div class="bgShow" style="width: 100%; height: auto">
+        <div class="profile">
+          <img
+            class="avatar"
+            id="userAvatar"
+            src="/assets/img/profull.png"
+            alt="Profile"
+          />
+          <div class="info">
+            <h3 id="userName">User name</h3>
+            <input
+              type="text"
+              id="inputUserName"
+              placeholder="Enter your name"
+            />
+            <button onclick="saveAccount()">Save</button>
+          </div>
+        </div>
+        <img
+          src="/assets/img/start_username.png"
           alt=""
           style="width: 100%; height: 100%; margin: auto; object-fit: contain"
         />
@@ -438,13 +490,37 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        const savedUserName = localStorage.getItem("userName");
+        if (!savedUserName) {
+          document.getElementById("homePage").classList.add("hidden");
+          document.getElementById("userPage").classList.remove("hidden");
+        } else {
+          document.querySelectorAll("#userName").forEach(element => {
+            element.textContent = savedUserName;
+          });
+          document.getElementById("homePage").classList.remove("hidden");
+          document.getElementById("userPage").classList.add("hidden");
+        }
+    
         if (window.location.hash === "#calendarPage") {
           document.getElementById("homePage").classList.add("hidden");
-          document.getElementById("homePage").classList.remove("visible");
-          document.getElementById("calendarPage").classList.add("visible");
           document.getElementById("calendarPage").classList.remove("hidden");
         }
       });
+    
+      function saveAccount() {
+        const userName = document.getElementById("inputUserName").value;
+        if (userName) {
+          localStorage.setItem("userName", userName);
+          document.querySelectorAll("#userName").forEach(element => {
+            element.textContent = userName;
+          });
+          document.getElementById("userPage").classList.add("hidden");
+          document.getElementById("homePage").classList.remove("hidden");
+        } else {
+          alert("Please enter a user name.");
+        }
+      }
     </script>
   </body>
 </html>
