@@ -21,7 +21,7 @@ body {
   z-index: 1;
 }
 
-#userPage .bgShow {
+/* #userPage .bgShow {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,7 +78,7 @@ body {
 #userPage .avatar {
   width: 100%;
   height: auto;
-}
+} */
 
 .hidden {
   display: none;
