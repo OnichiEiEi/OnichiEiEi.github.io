@@ -1,126 +1,60 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าเว็บโทรศัพท์</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #b2ebf2; /* สีพื้นหลัง */
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        header {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #ff4081; /* สีพื้นหลัง */
-            color: white;
-        }
-
-        .logo {
-            display: block;
-            margin: 0 auto;
-            width: 150px; /* ปรับขนาดโลโก้ */
-        }
-
-        .date {
-            text-align: center;
-            font-size: 1.5em;
-            color: #000;
-            margin-top: 10px;
-        }
-
-        .content {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .content img {
-            width: 100%;
-            height: auto;
-            max-width: 300px; /* ปรับขนาดรูปภาพ */
-        }
-
-        .btn {
-            display: block;
-            width: 100px;
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #ff5722; /* สีปุ่ม */
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .input-field {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
-            box-sizing: border-box; /* แก้ไขขนาดกรอบ */
-        }
-
-        .footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #ff4081; /* สีพื้นหลัง */
-            color: white;
-        }
-
-        .nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background-color: #ff4081; /* สีพื้นหลัง */
-            padding: 10px 0;
-            align-items: center; /* จัดแนวให้อยู่กลาง */
-        }
-
-        .nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-
-        .nav img {
-            width: 50px; /* ปรับขนาดรูปภาพ */
-            height: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment for Day</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .content {
+      text-align: center;
+    }
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="logo.png" alt="BunnyHop" class="logo">
-        </header>
-        <div class="date">1 / JAN</div>
-        <div class="content">
-            <img src="clouds_and_flowers.png" alt="Clouds and Flowers">
-            <a href="#" class="btn">ANXIETY</a>
-        </div>
-        <input type="text" class="input-field" placeholder="How do you feel today?">
-    </div>
-    <div class="nav">
-        <a href="#">📅</a>
-        <a href="#">🏠</a>
-        <img src="/mbproject/assets/img/Frame 2.png" alt="Bunny">
-        <a href="#">📖</a>
-    </div>
+  <button class="back-button" onclick="goBack()">Back</button>
+  <div class="content">
+    <h1 id="dayTitle">Comment for Day</h1>
+    <p id="commentText"></p>
+  </div>
+  <script>
+    function getQueryParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const regex = /([^&=]+)=([^&]*)/g;
+      let m;
+      while (m = regex.exec(queryString)) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+      }
+      return params;
+    }
+
+    function goBack() {
+      window.location.href = 'index.html#calendarPage'; // เปลี่ยน URL เป็นหน้าที่คุณต้องการ
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const params = getQueryParams();
+      document.getElementById("dayTitle").textContent = `Comment for Day ${params.day}`;
+      document.getElementById("commentText").textContent = params.comment;
+    });
+  </script>
 </body>
 </html>
