@@ -218,7 +218,7 @@ window.onload = () => {
     updateDate();
     setInitialImage();
     loadEmojis();
-    const oneDayInMilliseconds = 1 * 1 * 60 * 1000; // 24 hours
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
         // Update the emoji for the current day
