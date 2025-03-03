@@ -584,7 +584,11 @@ button#cancel-passcode:active {
     display: block;
     animation: slideIn 0.5s ease-out;
 }
-  
+
+h4 {
+    margin-left: 10px;
+}
+
   /* @keyframes slideIn {
     from {
       bottom: -50px;
