@@ -123,7 +123,6 @@ function loadEmojis() {
 
 // Array of image paths
 const images = [
-    '/assets/img/Front_Challenge_card.png',
     '/assets/img/Front_Challenge_card (1).png',
     '/assets/img/Front_Challenge_card (2).png',
     '/assets/img/Front_Challenge_card (3).png',
@@ -153,36 +152,13 @@ const images = [
     '/assets/img/Front_Challenge_card (27).png',
     '/assets/img/Front_Challenge_card (28).png',
     '/assets/img/Front_Challenge_card (29).png',
-    '/assets/img/Front_Challenge_card (30).png',
+    '/assets/img/Front_Challenge_card (30).png'
 ];
 
 // Function to get a random image from the array
 function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * images.length);
     return images[randomIndex];
-}
-
-// Function to update the image at a specified interval
-function updateImageAtInterval(interval) {
-    const flashCard = document.getElementById('flashCard');
-    setInterval(() => {
-        const newImage = getRandomImage();
-        flashCard.src = newImage;
-        localStorage.setItem('flashCardImage', newImage);
-    }, interval);
-}
-
-// Function to set the initial image from localStorage or a random image
-function setInitialImage() {
-    const flashCard = document.getElementById('flashCard');
-    const savedImage = localStorage.getItem('flashCardImage');
-    if (savedImage) {
-        flashCard.src = savedImage;
-    } else {
-        const newImage = getRandomImage();
-        flashCard.src = newImage;
-        localStorage.setItem('flashCardImage', newImage);
-    }
 }
 
 // Function to update the day and month
@@ -230,9 +206,10 @@ window.onload = () => {
 // Function to update the image on the flash card
 function updateImage() {
     const flashCard = document.getElementById('flashCard');
-    const newImage = getRandomImage();
-    flashCard.src = newImage;
-    localStorage.setItem('flashCardImage', newImage);
+    const savedImage = localStorage.getItem('flashCardImage');
+    if (savedImage) {
+        flashCard.src = savedImage;
+    }
 }
 
 // Function to flip the card
@@ -241,6 +218,55 @@ function flipCard() {
     card.classList.toggle('flipped');
     updateImage();
 }
+
+// Function to update the image at a specified interval
+function updateImageAtInterval(interval) {
+    const flashCard = document.getElementById('flashCard');
+    const lastUpdate = localStorage.getItem('flashCardLastUpdate');
+    const now = new Date().getTime();
+
+    if (!lastUpdate || now - lastUpdate >= interval) {
+        const newImage = getRandomImage();
+        flashCard.src = newImage;
+        localStorage.setItem('flashCardImage', newImage);
+        localStorage.setItem('flashCardLastUpdate', now);
+    } else {
+        const savedImage = localStorage.getItem('flashCardImage');
+        if (savedImage) {
+            flashCard.src = savedImage;
+        }
+    }
+}
+
+// Function to set the initial image from localStorage or a random image
+function setInitialImage() {
+    const flashCard = document.getElementById('flashCard');
+    const savedImage = localStorage.getItem('flashCardImage');
+    const lastUpdate = localStorage.getItem('flashCardLastUpdate');
+    const now = new Date().getTime();
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
+    if (savedImage && lastUpdate && now - lastUpdate < oneDayInMilliseconds) {
+        flashCard.src = savedImage;
+    } else {
+        const newImage = getRandomImage();
+        flashCard.src = newImage;
+        localStorage.setItem('flashCardImage', newImage);
+        localStorage.setItem('flashCardLastUpdate', now);
+    }
+}
+
+// Call the function to show the splash screen on page load
+window.onload = () => {
+    showSplashScreen();
+    updateDate();
+    setInitialImage();
+    loadEmojis();
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours
+    setInterval(() => {
+        updateImageAtInterval(oneDayInMilliseconds);
+    }, oneDayInMilliseconds);
+};
 
 const emojiMessages = {
     'happy_emo.png': [
