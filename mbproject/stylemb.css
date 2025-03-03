@@ -12,7 +12,7 @@ body {
     max-width: 600px;
     min-height: 100vh;
     margin: auto;
-    background-image: url('/mbproject/assets/img/home_anxiety.png');
+    background-image: url('/assets/img/home_anxiety.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-color: #C2F1FF;
@@ -589,6 +589,8 @@ h4 {
     margin-left: 10px;
 }
 
+
+
   /* @keyframes slideIn {
     from {
       bottom: -50px;
@@ -597,3 +599,4 @@ h4 {
       bottom: 20px;
     }
   } */
+
