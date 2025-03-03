@@ -50,14 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   
-  function saveComment(day, text) {
-    const date = new Date();
-    const commentData = {
-      text: text,
-      date: date.toISOString().split('T')[0] // Save only the date part
-    };
-    localStorage.setItem(`comment_${day}`, JSON.stringify(commentData));
-  }
+function saveComment(day, text) {
+  const date = new Date();
+  const commentData = {
+    text: text,
+    date: date.toISOString().split('T')[0] // Save only the date part
+  };
+  localStorage.setItem(`comment_${day}`, JSON.stringify(commentData));
+}
   
   function showComment(day) {
     const commentData = JSON.parse(localStorage.getItem(`comment_${day}`));
