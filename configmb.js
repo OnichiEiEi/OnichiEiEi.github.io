@@ -165,20 +165,11 @@ function getRandomImage() {
 // Function to update the image at a specified interval
 function updateImageAtInterval(interval) {
     const flashCard = document.getElementById('flashCard');
-    const lastUpdate = localStorage.getItem('flashCardLastUpdate');
-    const now = new Date().getTime();
-
-    if (!lastUpdate || now - lastUpdate >= interval) {
+    setInterval(() => {
         const newImage = getRandomImage();
         flashCard.src = newImage;
         localStorage.setItem('flashCardImage', newImage);
-        localStorage.setItem('flashCardLastUpdate', now);
-    } else {
-        const savedImage = localStorage.getItem('flashCardImage');
-        if (savedImage) {
-            flashCard.src = savedImage;
-        }
-    }
+    }, interval);
 }
 
 // Function to set the initial image from localStorage or a random image
@@ -191,7 +182,6 @@ function setInitialImage() {
         const newImage = getRandomImage();
         flashCard.src = newImage;
         localStorage.setItem('flashCardImage', newImage);
-        localStorage.setItem('flashCardLastUpdate', new Date().getTime());
     }
 }
 
