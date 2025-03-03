@@ -1,32 +1,91 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff; /* สีพื้นหลัง */
-    overflow: hidden;
-    touch-action: manipulation;
-    user-select: none;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; /* สีพื้นหลัง */
+  overflow: hidden;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .container {
-    max-width: 600px;
-    min-height: 100vh;
-    margin: auto;
-    background-image: url('/assets/img/home_anxiety.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: #C2F1FF;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 1;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: auto;
+  background-image: url("assets/img/home_anxiety.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #c2f1ff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+#userPage .bgShow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+#userPage .bgShow img {
+  width: 100%;
+  height: auto;
+  z-index: -2;
+  object-fit: contain;
+}
+
+#userPage .profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  height: auto;
+  z-index: 1;
+  position: absolute;
+}
+
+#userPage .profile img {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+}
+
+#userPage .info {
+  text-align: center;
+}
+
+#userPage .info h3 {
+  margin: 0;
+  padding: 0;
+  color: #000000;
+}
+
+#userPage .info input {
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  border: 3px solid black;
+  padding: 10px;
+}
+
+#userPagr .info a {
+  margin-left: -50%;
+}
+
+#userPage .avatar {
+  width: 100%;
+  height: auto;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .visible {
-    display: block;
+  display: block;
 }
 
 /* .cloud1 {
@@ -58,416 +117,416 @@ body {
 } */
 
 .content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .date {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin: 0;
-    font-size: 2rem;
-    color: #000;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 2rem;
+  color: #000;
 }
 
 .date .day {
-    padding-right: 10px;
-    margin-top: 20px;
+  padding-right: 10px;
+  margin-top: 20px;
 }
 
 .date .month {
-    padding-right: 100px;
-    margin-top: 20px;
+  padding-right: 100px;
+  margin-top: 20px;
 }
 
 .content img {
-    width: 100%;
-    height: auto;
-    max-width: 250px; /* ปรับขนาดรูปภาพ */
+  width: 100%;
+  height: auto;
+  max-width: 250px; /* ปรับขนาดรูปภาพ */
 }
 
 .card {
-    perspective: 1000px;
-    width: 250px;
-    height: 250px;
+  perspective: 1000px;
+  width: 250px;
+  height: 250px;
 }
 
 .card-inner {
-    position: relative;
-    width: 100%;
-    height: 90%;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 100%;
+  height: 90%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card.flipped .card-inner {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
-.card-front, .card-back {
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.card-front,
+.card-back {
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-back {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .emoji {
-    width: 100%;
-    height: auto;
-    margin-top: 0px;
-    margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  margin-top: 0px;
+  margin-bottom: 20px;
 }
 
 .btn-emoji {
-    display: block;
-    width: 70px;
-    margin: auto;
-    color: white;
-    text-align: center;
-    text-decoration: none;
+  display: block;
+  width: 70px;
+  margin: auto;
+  color: white;
+  text-align: center;
+  text-decoration: none;
 }
 
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
 }
 
 .overlay-content {
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
 }
 
 .closebtn {
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    font-size: 30px;
-    cursor: pointer;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .emoji-options img {
-    width: 50px;
-    height: 50px;
-    margin: 10px;
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  cursor: pointer;
 }
 
 .comment {
-    width: 80%;
-    height: auto;
-    margin: auto;
-    display: block;
+  width: 80%;
+  height: auto;
+  margin: auto;
+  display: block;
 }
 
 .comment p {
-    margin: 0;
-    padding-left: 10px;
+  margin: 0;
+  padding-left: 10px;
 }
 
 .comment input {
-    box-sizing: border-box;
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #a7a7a7;
-    border-radius: 25px;
-    text-align: start;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #a7a7a7;
+  border-radius: 25px;
+  text-align: start;
 }
 
 .footer {
-    position: absolute;
-    bottom: -7%;
-    text-align: center;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: absolute;
+  bottom: -7%;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer img {
-    width: 100%; /* ปรับขนาดรูปภาพ */
-    height: auto;
-    min-height: 270px;
-    z-index: -2;
+  width: 100%; /* ปรับขนาดรูปภาพ */
+  height: auto;
+  min-height: 270px;
+  z-index: -2;
 }
 
 .footer .text-box {
-    position: absolute; /* เปลี่ยนจาก relative เป็น absolute */
-    top: 44%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* ใช้ transform เพื่อให้อยู่ตรงกลาง */
-    width: 70%;
-    height: auto;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 0px;
-    border: 1px solid #a7a7a7;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    z-index: -2;
+  position: absolute; /* เปลี่ยนจาก relative เป็น absolute */
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* ใช้ transform เพื่อให้อยู่ตรงกลาง */
+  width: 70%;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 0px;
+  border: 1px solid #a7a7a7;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  z-index: -2;
 }
 
 .navbar {
-    position: fixed;
-    bottom: 0;
-    max-width: 600px;
-    width: 100%;
+  position: fixed;
+  bottom: 0;
+  max-width: 600px;
+  width: 100%;
 }
 
 .nav {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: #EF0074; /* สีพื้นหลัง */
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #ef0074; /* สีพื้นหลัง */
 }
 
 .nav a {
-    color: white;
-    text-decoration: none;
-    max-height: 45px;
+  color: white;
+  text-decoration: none;
+  max-height: 45px;
 }
 
 .nav img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
 
 .nav .home {
-    position: relative;
-    top: -20px;
-    width: 50px;
-    height: auto;
-    background-color: #FF4196;
-    border-radius: 50%;
-    padding: 10px;
+  position: relative;
+  top: -20px;
+  width: 50px;
+  height: auto;
+  background-color: #ff4196;
+  border-radius: 50%;
+  padding: 10px;
 }
 
 .months {
-    padding-right: 10px;
-    margin-top: 20px;
+  padding-right: 10px;
+  margin-top: 20px;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, auto);
-    gap: 10px; /* Adjust the gap between grid items if needed */
-    justify-items: center;
-    align-items: center;
-    padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, auto);
+  gap: 10px; /* Adjust the gap between grid items if needed */
+  justify-items: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .grid-emoji {
-    width: 100%;
-    height: auto;
-    max-width: 100px; /* Adjust the max width if needed */
+  width: 100%;
+  height: auto;
+  max-width: 100px; /* Adjust the max width if needed */
 }
 
 header {
-    display: flex;
-    width: 100%;
-    height: auto;
+  display: flex;
+  width: 100%;
+  height: auto;
 }
 
 button {
-    padding: 10px; /* เพิ่มช่องว่างภายในปุ่ม */
-    margin: 10px; /* เพิ่มช่องว่างระหว่างปุ่ม */
-    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็น pointer เพื่อแสดงว่าเป็นปุ่มคลิกได้ */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับกล่อง */
-    border: 1px solid #a7a7a7;
+  padding: 10px; /* เพิ่มช่องว่างภายในปุ่ม */
+  margin: 10px; /* เพิ่มช่องว่างระหว่างปุ่ม */
+  cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็น pointer เพื่อแสดงว่าเป็นปุ่มคลิกได้ */
+  border-radius: 10px; /* เพิ่มมุมมนให้กับกล่อง */
+  border: 1px solid #a7a7a7;
 }
 
 /* setting */
 .profile {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    gap: 10px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  gap: 10px;
 }
 
 .avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
 }
 
 .menu-list {
-    width: 100%;
-    height: auto;
-    list-style: none;
-    padding: 0;
+  width: 100%;
+  height: auto;
+  list-style: none;
+  padding: 0;
 }
 
 .menu-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
-}   
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+}
 
 .menu-list li a {
-    text-decoration: none;
-    color: black;
-    width: 100%;
-    display: flex;
-    align-items: center;
+  text-decoration: none;
+  color: black;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
-    
+
 .arrow {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    background: none; /* ไม่ให้มีพื้นหลัง */
-    display: inline-block; /* ถ้าต้องการให้ไอคอนแสดงในแถวเดียวกัน */
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background: none; /* ไม่ให้มีพื้นหลัง */
+  display: inline-block; /* ถ้าต้องการให้ไอคอนแสดงในแถวเดียวกัน */
 }
 
 /* Toggle Switch */
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 22px;
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
 }
 
 .switch input {
-    opacity: 0;
-    width: 100%;
-    height: 100%;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    border-radius: 22px;
-    transition: .3s;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 22px;
+  transition: 0.3s;
 }
 
 .slider:before {
-    content: "";
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 3px;
-    background-color: white;
-    border-radius: 50%;
-    transition: .3s;
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
 }
 
 input:checked + .slider {
-    background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 input:checked + .slider:before {
-    transform: translateX(100%);
+  transform: translateX(100%);
 }
 
 .bunny-image {
-    position: absolute; 
-    bottom: 0;  /* ติดขอบล่างของหน้าจอ */
-    left: 50%;  /* กึ่งกลางจอ */
-    transform: translateX(-50%);  /* ปรับให้อยู่กึ่งกลาง */
-    width: 100%;  /* ให้ขนาดอัตโนมัติ */
-    max-width: 100%;  /* ไม่ให้กว้างเกินจอ */
-    z-index: -2 ;  /* ให้แสดงอยู่หน้าสุด */
+  position: absolute;
+  bottom: 0; /* ติดขอบล่างของหน้าจอ */
+  left: 50%; /* กึ่งกลางจอ */
+  transform: translateX(-50%); /* ปรับให้อยู่กึ่งกลาง */
+  width: 100%; /* ให้ขนาดอัตโนมัติ */
+  max-width: 100%; /* ไม่ให้กว้างเกินจอ */
+  z-index: -2; /* ให้แสดงอยู่หน้าสุด */
 }
 
 /* กำหนดให้ modal แสดงขึ้นมาที่กลางหน้าจอ */
 .modal {
-    display: none;/* ซ่อน modal โดยเริ่มต้น  จะไม่แสดงเมื่อโหลดหน้าเว็บ */
-    position: fixed;/* ทำให้ modal อยู่ที่ตำแหน่งคงที่เมื่อเลื่อนหน้าจอ */
-    z-index: 1; /* กำหนดระดับการทับซ้อน (จะอยู่ด้านบนสุด) */
-    left: 0;/* เริ่มต้นจากด้านซ้ายสุดของหน้าจอ */
-    top: 0;/* เริ่มต้นจากด้านบนสุดของหน้าจอ */
-    width: 100%;/* ให้ modal ครอบคลุมขนาดหน้าจอทั้งหมด มันเลยอยู่ตรงกลาง */
-    height: 100%;/* ให้ modal ครอบคลุมขนาดหน้าจอทั้งหมด */
-    background-color: rgba(232, 235, 215, 0.4); /* พื้นหลังสีดำโปร่งใส */
-    padding-top: 60px;/* ให้เว้นช่องว่างจากด้านบน 60px สำหรับเนื้อหาภายใน modal */
+  display: none; /* ซ่อน modal โดยเริ่มต้น  จะไม่แสดงเมื่อโหลดหน้าเว็บ */
+  position: fixed; /* ทำให้ modal อยู่ที่ตำแหน่งคงที่เมื่อเลื่อนหน้าจอ */
+  z-index: 1; /* กำหนดระดับการทับซ้อน (จะอยู่ด้านบนสุด) */
+  left: 0; /* เริ่มต้นจากด้านซ้ายสุดของหน้าจอ */
+  top: 0; /* เริ่มต้นจากด้านบนสุดของหน้าจอ */
+  width: 100%; /* ให้ modal ครอบคลุมขนาดหน้าจอทั้งหมด มันเลยอยู่ตรงกลาง */
+  height: 100%; /* ให้ modal ครอบคลุมขนาดหน้าจอทั้งหมด */
+  background-color: rgba(232, 235, 215, 0.4); /* พื้นหลังสีดำโปร่งใส */
+  padding-top: 60px; /* ให้เว้นช่องว่างจากด้านบน 60px สำหรับเนื้อหาภายใน modal */
 }
 
 .modal-content {
-    background-color: rgb(222, 238, 243);/* พื้นหลังของกล่อง modal เป็นสีขาว */
-    margin: auto;/* ใช้ auto ในแนวนอนเพื่อจัดกล่องให้ตรงกลางหน้าจอ และใช้ 5% สำหรับช่องว่างด้านบนและด้านล่าง*/
-    padding: 20px; /* เพิ่มช่องว่างภายในกล่อง 20px */
-    border: 1px solid #888;/* ขอบของกล่องเป็นสีเทาอ่อน */
-    width: 80%; /* ขนาดของกล่อง modal กว้าง 80% ของหน้าจอ */
-    max-width: 400px;/* ขนาดสูงสุดของกล่องคือ 400px */
-    border-radius: 15px; /* เพิ่มมุมมนให้กับกล่อง */
+  background-color: rgb(222, 238, 243); /* พื้นหลังของกล่อง modal เป็นสีขาว */
+  margin: auto; /* ใช้ auto ในแนวนอนเพื่อจัดกล่องให้ตรงกลางหน้าจอ และใช้ 5% สำหรับช่องว่างด้านบนและด้านล่าง*/
+  padding: 20px; /* เพิ่มช่องว่างภายในกล่อง 20px */
+  border: 1px solid #888; /* ขอบของกล่องเป็นสีเทาอ่อน */
+  width: 80%; /* ขนาดของกล่อง modal กว้าง 80% ของหน้าจอ */
+  max-width: 400px; /* ขนาดสูงสุดของกล่องคือ 400px */
+  border-radius: 15px; /* เพิ่มมุมมนให้กับกล่อง */
 }
 
 #new-passcode {
-    display: block;
-    width: 50%;
-    font-size: 18px;
-    text-align: center;
-    letter-spacing: 8px; /* เว้นระยะระหว่างตัวเลข */
-    padding: 10px;
-    border: 1px solid #888;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
+  display: block;
+  width: 50%;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 8px; /* เว้นระยะระหว่างตัวเลข */
+  padding: 10px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
 }
 
 .number-pad {
-    display: grid; /*ใช้ระบบกริดในการจัดเรียงปุ่มในแป้นพิมพ์ตัวเลข*/
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    margin: 20px 0;
-    
+  display: grid; /*ใช้ระบบกริดในการจัดเรียงปุ่มในแป้นพิมพ์ตัวเลข*/
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  margin: 20px 0;
 }
 
 .number {
-    padding: 10px;
-    font-size: 18px;
-    background-color: #f0f0f0;
-    border: 1px solid #888;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 50%;
-    /*
+  padding: 10px;
+  font-size: 18px;
+  background-color: #f0f0f0;
+  border: 1px solid #888;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 50%;
+  /*
     border-radius: 50%;
     transition: background-color 0.3s ease;
     */
@@ -475,123 +534,120 @@ input:checked + .slider:before {
 
 /* ปุ่มเลข 0 */
 #zero {
-    grid-column: 2; /* ให้ 0 อยู่กลางคอลัมน์ที่สอง */
-    grid-row: 4;    /* ให้ 0 อยู่แถวที่ 4 (แถวล่างสุด) */
+  grid-column: 2; /* ให้ 0 อยู่กลางคอลัมน์ที่สอง */
+  grid-row: 4; /* ให้ 0 อยู่แถวที่ 4 (แถวล่างสุด) */
 }
 
 /* ปุ่ม C */
 #clear {
-    background-color: #f8d7da;
-    grid-column: 3; /* ให้ C อยู่ในคอลัมน์ที่สาม */
-    grid-row: 4;    /* ให้ C อยู่แถวที่ 4 (แถวล่างสุด) */
+  background-color: #f8d7da;
+  grid-column: 3; /* ให้ C อยู่ในคอลัมน์ที่สาม */
+  grid-row: 4; /* ให้ C อยู่แถวที่ 4 (แถวล่างสุด) */
 }
 
 /* คอนเทนเนอร์ของปุ่ม "บันทึก" และ "ยกเลิก" */
 .modal-actions {
-    display: flex;
-    justify-content: center; /* จัดปุ่มให้อยู่ตรงกลาง */
-    gap: 20px; /* ช่องว่างระหว่างปุ่ม */
-    margin-top: 20px; /* เพิ่มช่องว่างระหว่างปุ่มกับแป้นพิมพ์ */
+  display: flex;
+  justify-content: center; /* จัดปุ่มให้อยู่ตรงกลาง */
+  gap: 20px; /* ช่องว่างระหว่างปุ่ม */
+  margin-top: 20px; /* เพิ่มช่องว่างระหว่างปุ่มกับแป้นพิมพ์ */
 }
 
-
 button#save-passcode {
-    width: 50%;                /* ให้ปุ่มขยายความกว้างเต็มที่ */
-    padding: 15px;              /* เพิ่มช่องว่างภายในปุ่ม */
-    font-size: 18px;            /* ขนาดตัวอักษรของปุ่ม */
-    background-color: #4CAF50; /* สีพื้นหลังเป็นสีเขียว */
-    color: white;               /* สีตัวอักษรเป็นสีขาว */
-    border: none;               /* ลบขอบของปุ่ม */
-    border-radius: 10px;        /* มุมปุ่มโค้งมน */
-    cursor: pointer;           /* เปลี่ยนเคอร์เซอร์เป็นรูปมือเมื่อชี้ที่ปุ่ม */
-    transition: background-color 0.3s ease; /* ทำให้การเปลี่ยนสีพื้นหลังนุ่มนวล */
+  width: 50%; /* ให้ปุ่มขยายความกว้างเต็มที่ */
+  padding: 15px; /* เพิ่มช่องว่างภายในปุ่ม */
+  font-size: 18px; /* ขนาดตัวอักษรของปุ่ม */
+  background-color: #4caf50; /* สีพื้นหลังเป็นสีเขียว */
+  color: white; /* สีตัวอักษรเป็นสีขาว */
+  border: none; /* ลบขอบของปุ่ม */
+  border-radius: 10px; /* มุมปุ่มโค้งมน */
+  cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็นรูปมือเมื่อชี้ที่ปุ่ม */
+  transition: background-color 0.3s ease; /* ทำให้การเปลี่ยนสีพื้นหลังนุ่มนวล */
 }
 
 /* เพิ่มผลเมื่อเคอร์เซอร์ชี้ที่ปุ่ม */
 button#save-passcode:hover {
-    background-color: #45a049; /* เปลี่ยนสีพื้นหลังเมื่อ hover เป็นสีเขียวเข้ม */
+  background-color: #45a049; /* เปลี่ยนสีพื้นหลังเมื่อ hover เป็นสีเขียวเข้ม */
 }
 
 /* เพิ่มผลเมื่อปุ่มถูกคลิก */
 button#save-passcode:active {
-    background-color: #388e3c; /* เปลี่ยนสีพื้นหลังเมื่อคลิกเป็นสีเขียวเข้มกว่า */
+  background-color: #388e3c; /* เปลี่ยนสีพื้นหลังเมื่อคลิกเป็นสีเขียวเข้มกว่า */
 }
 
 button#cancel-passcode {
-    width: 50%;
-    padding: 15px;
-    font-size: 18px;
-    background-color: #e67c74; /* สีพื้นหลังเป็นสีแดง */
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  width: 50%;
+  padding: 15px;
+  font-size: 18px;
+  background-color: #e67c74; /* สีพื้นหลังเป็นสีแดง */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button#cancel-passcode:hover {
-    background-color: #e53935; /* สีแดงเข้มเมื่อ hover */
+  background-color: #e53935; /* สีแดงเข้มเมื่อ hover */
 }
 
 button#cancel-passcode:active {
-    background-color: #d32f2f; /* สีแดงเข้มที่สุดเมื่อคลิก */
+  background-color: #d32f2f; /* สีแดงเข้มที่สุดเมื่อคลิก */
 }
 /* ฟอร์มตั้งเวลาแจ้งเตือน */
 .notification-form {
-    display: none; /* ซ่อนฟอร์มเริ่มต้น */
-    margin-top: 20px;
-    margin-left: 10px;
+  display: none; /* ซ่อนฟอร์มเริ่มต้น */
+  margin-top: 20px;
+  margin-left: 10px;
 }
-  
+
 .notification-form input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 70%;
 }
-  
+
 .notification-form button {
-    background-color: #a4dfe4;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+  background-color: #a4dfe4;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
-  
+
 .notification-form button:hover {
-    background-color: #8ed7dc;
+  background-color: #8ed7dc;
 }
-  
-  /* การแสดงผลการแจ้งเตือน */
+
+/* การแสดงผลการแจ้งเตือน */
 .notification-alert {
-    display: none; /* ซ่อนการแจ้งเตือนเริ่มต้น */
-    position: fixed;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #92c6c9;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 16px;
-    z-index: 1;
+  display: none; /* ซ่อนการแจ้งเตือนเริ่มต้น */
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #92c6c9;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  z-index: 1;
 }
-  
+
 .notification-alert.show {
-    display: block;
-    animation: slideIn 0.5s ease-out;
+  display: block;
+  animation: slideIn 0.5s ease-out;
 }
 
 h4 {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
-
-
-  /* @keyframes slideIn {
+/* @keyframes slideIn {
     from {
       bottom: -50px;
     }
@@ -599,4 +655,3 @@ h4 {
       bottom: 20px;
     }
   } */
-
