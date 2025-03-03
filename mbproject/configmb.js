@@ -90,7 +90,7 @@ function showComment(day) {
         </style>
       </head>
       <body>
-        <button class="back-button" onclick="calenderShow()">Back</button>
+        <a href="index.html" class="back-btn" style="text-decoration: none;"> <- </a>
         <div class="content">
           <h1>Comment for Day ${day}</h1>
           <p>${comment}</p>
