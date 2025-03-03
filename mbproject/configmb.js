@@ -36,6 +36,73 @@ function closeOverlay() {
     document.getElementById('emojiOverlay').style.display = 'none';
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const inputComment = document.getElementById("inputComment");
+
+  inputComment.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const date = new Date();
+      const day = date.getDate();
+      saveComment(day, inputComment.value);
+      inputComment.value = ""; // Clear the input field
+    }
+  });
+});
+
+function saveComment(day, text) {
+  localStorage.setItem(`comment_${day}`, text);
+}
+
+function showComment(day) {
+  const comment = localStorage.getItem(`comment_${day}`);
+  if (comment) {
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Comment for Day ${day}</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+          .content {
+            text-align: center;
+          }
+          .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+          }
+        </style>
+      </head>
+      <body>
+        <button class="back-button" onclick="window.close()">Back</button>
+        <div class="content">
+          <h1>Comment for Day ${day}</h1>
+          <p>${comment}</p>
+        </div>
+      </body>
+      </html>
+    `);
+  } else {
+    alert("No comment saved for this day.");
+  }
+}
+
 function selectEmoji(emoji) {
     document.getElementById('showEmoji').src = `/assets/img/${emoji}`;
     const messages = emojiMessages[emoji];
@@ -168,8 +235,20 @@ function updateDate() {
     document.getElementById('numMonths').innerText = fullMonth;
 }
 
-// Call the function to update the date on page load
+// Function to show the splash screen for 5 seconds and then navigate to homePage
+function showSplashScreen() {
+    document.getElementById("showPage").classList.remove("hidden");
+    document.getElementById("homePage").classList.add("hidden");
+
+    setTimeout(() => {
+        document.getElementById("showPage").classList.add("hidden");
+        document.getElementById("homePage").classList.remove("hidden");
+    }, 2000); // 5000 milliseconds = 5 seconds
+}
+
+// Call the function to show the splash screen on page load
 window.onload = () => {
+    showSplashScreen();
     updateDate();
     setInitialImage();
     loadEmojis();
@@ -339,19 +418,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ฟังก์ชันแจ้งเตือนเมื่อถึงเวลาที่ตั้งไว้
-    function checkNotificationTime() {
-        const savedTime = localStorage.getItem("notificationTime");
-        if (!savedTime) return;
-
-        const now = new Date();
-        const [savedHour, savedMinute] = savedTime.split(":").map(Number);
-
-        if (now.getHours() === savedHour && now.getMinutes() === savedMinute) {
-            showNotification();
-        }
-    }
-
     // ฟังก์ชันแจ้งเตือน (เสียง + การแจ้งเตือน)
     function showNotification() {
     
@@ -364,6 +430,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     new Notification("⏰ แจ้งเตือน!", { body: "ถึงเวลาที่คุณตั้งค่าไว้แล้ว!" });
                 }
             });
+        }
+    }
+
+    // ฟังก์ชันแจ้งเตือนเมื่อถึงเวลาที่ตั้งไว้
+    function checkNotificationTime() {
+        const savedTime = localStorage.getItem("notificationTime");
+        if (!savedTime) return;
+
+        const now = new Date();
+        const [savedHour, savedMinute] = savedTime.split(":").map(Number);
+
+        if (now.getHours() === savedHour && now.getMinutes() === savedMinute) {
+            showNotification();
         }
     }
 
