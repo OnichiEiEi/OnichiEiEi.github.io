@@ -244,28 +244,16 @@ function flipCard() {
 
 const emojiMessages = {
     'happy_emo.png': [
-        "I'm here for you na ja",
-        "Stay strong!",
-        "You got this!",
-        "Keep smiling!"
+        "เห็นคุณได้ทำสิ่งใหม่ๆ  แล้วรู้สึกอบอุ่นใจมาก ขอให้ก้าวต่อไปอย่างมั่นใจนะ"
     ],
     'anxi_emo.png': [
-        "It's okay to feel anxious",
-        "Take a deep breath",
-        "You are not alone",
-        "Stay calm"
+        "รู้สึกเฉยๆ  ก็เป็นเรื่องปกติ  ไม่เป็นไรนะ (˶ᵔ ᵕ ᵔ˶)"
     ],
     'ANGRY_emo.png': [
-        "It's okay to feel angry",
-        "Take a moment to cool down",
-        "You are in control",
-        "Stay composed"
+        "ไม่เป็นไรนะ แค่คุณกล้าลองก็วิเศษมากแล้ว! ദ്ദി(˵ •̀ ᴗ - ˵ )"
     ],
     'ennui_emo.png': [
-        "Feeling bored is normal",
-        "Find something fun to do",
-        "Stay engaged",
-        "Keep exploring"
+        "ไม่มีอะไรสายเกินไป ถ้าวันหนึ่งคุณอยากลอง คุณยังมีโอกาศเสมอ ˙ᵕ˙ "
     ]
 };
 
