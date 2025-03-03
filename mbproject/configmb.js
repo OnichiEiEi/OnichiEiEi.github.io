@@ -37,27 +37,32 @@ function closeOverlay() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const inputComment = document.getElementById("inputComment");
-
-  inputComment.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      const date = new Date();
-      const day = date.getDate();
-      saveComment(day, inputComment.value);
-      inputComment.value = ""; // Clear the input field
-    }
+    const inputComment = document.getElementById("inputComment");
+  
+    inputComment.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const date = new Date();
+        const day = date.getDate();
+        saveComment(day, inputComment.value);
+        inputComment.value = ""; // Clear the input field
+      }
+    });
   });
-});
-
-function saveComment(day, text) {
-  localStorage.setItem(`comment_${day}`, text);
-}
-
-function showComment(day) {
-    const comment = localStorage.getItem(`comment_${day}`);
-    if (comment) {
-      const url = `text.html?day=${day}&comment=${encodeURIComponent(comment)}`;
+  
+  function saveComment(day, text) {
+    const date = new Date();
+    const commentData = {
+      text: text,
+      date: date.toISOString().split('T')[0] // Save only the date part
+    };
+    localStorage.setItem(`comment_${day}`, JSON.stringify(commentData));
+  }
+  
+  function showComment(day) {
+    const commentData = JSON.parse(localStorage.getItem(`comment_${day}`));
+    if (commentData) {
+      const url = `text.html?day=${day}&comment=${encodeURIComponent(commentData.text)}&date=${commentData.date}`;
       window.open(url, "_blank");
     } else {
       alert("No comment saved for this day.");
@@ -213,7 +218,7 @@ window.onload = () => {
     updateDate();
     setInitialImage();
     loadEmojis();
-    const oneDayInMilliseconds = 1 * 1 * 10 * 1000; // 24 hours
+    const oneDayInMilliseconds = 1 * 1 * 60 * 1000; // 24 hours
     updateImageAtInterval(oneDayInMilliseconds);
     setInterval(() => {
         // Update the emoji for the current day
