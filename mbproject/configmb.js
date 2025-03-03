@@ -55,54 +55,15 @@ function saveComment(day, text) {
 }
 
 function showComment(day) {
-  const comment = localStorage.getItem(`comment_${day}`);
-  if (comment) {
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Comment for Day ${day}</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-          }
-          .content {
-            text-align: center;
-          }
-          .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-          }
-        </style>
-      </head>
-      <body>
-        <a href="index.html" class="back-btn" style="text-decoration: none;"> <- </a>
-        <div class="content">
-          <h1>Comment for Day ${day}</h1>
-          <p>${comment}</p>
-        </div>
-      </body>
-      </html>
-    `);
-  } else {
-    alert("No comment saved for this day.");
+    const comment = localStorage.getItem(`comment_${day}`);
+    if (comment) {
+      const url = `text.html?day=${day}&comment=${encodeURIComponent(comment)}`;
+      window.open(url, "_blank");
+    } else {
+      alert("No comment saved for this day.");
+    }
   }
-}
-
+  
 function selectEmoji(emoji) {
     document.getElementById('showEmoji').src = `/assets/img/${emoji}`;
     const messages = emojiMessages[emoji];
