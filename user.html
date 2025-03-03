@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff; /* สีพื้นหลัง */
+        overflow: hidden;
+        touch-action: manipulation;
+        user-select: none;
+      }
+
+      .container {
+        max-width: 600px;
+        min-height: 100vh;
+        margin: auto;
+        background-image: url("/mbproject/assets/img/home_anxiety.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #c2f1ff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+      }
+
+      #userPage .bgShow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+      }
+
+      #userPage .bgShow img {
+        width: 100%;
+        height: auto;
+        z-index: -2;
+        object-fit: contain;
+      }
+
+      #userPage .profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+        height: auto;
+        z-index: 1;
+        position: absolute;
+      }
+
+      #userPage .profile img {
+        border-radius: 50%;
+        width: 100%;
+        height: auto;
+      }
+
+      #userPage .info {
+        text-align: center;
+      }
+
+      #userPage .info h3 {
+        margin: 0;
+        padding: 0;
+        color: #000000;
+      }
+
+      #userPage .info input {
+        margin-top: 10px;
+        width: 100%;
+        height: 30px;
+        border-radius: 10px;
+        border: 3px solid black;
+        padding: 10px;
+      }
+
+      #userPagr .info a {
+        margin-left: -50%;
+      }
+
+      #userPage .avatar {
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="userPage">
+      <div class="bgShow">
+        <img src="/assets/img/start_username.png" alt="" />
+        <div class="profile">
+          <img
+            class="avatar"
+            id="userAvatar"
+            src="/assets/img/profull.png"
+            alt="Profile"
+          />
+          <div class="info" style="text-align: center">
+            <h3 id="userName"></h3>
+            <input
+              type="text"
+              id="inputUserName"
+              placeholder="Enter your name"
+            />
+            <a href="#" onclick="saveAccount()"
+              ><img src="/assets/img/save.png" alt=""
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

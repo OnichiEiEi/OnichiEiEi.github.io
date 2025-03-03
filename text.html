@@ -1,16 +1,139 @@
 <!DOCTYPE html>
-<html>
-<body>
-  <div id="result"></div>
-  <script>
-    // ตรวจสอบการสนับสนุนของเบราว์เซอร์
-    if (typeof(Storage) !== "undefined") {
-      // ดึงข้อมูลจาก LocalStorage
-      var data = localStorage.getItem("yourKey");
-      document.getElementById("result").innerHTML = data;
-    } else {
-      document.getElementById("result").innerHTML = "เบราว์เซอร์ของคุณไม่สนับสนุน Web Storage";
-    }
-  </script>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment for Day</title>
+    <script src="configmb.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-self: center;
+        max-width: 600px;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        touch-action: manipulation;
+        user-select: none;
+      }
+
+      .content {
+        background-image: url("/assets/img/Diary1_jan.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100vh;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .content img {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      .back-button {
+        position: relative;
+        top: 40px;
+        left: 20px;
+        padding: 10px 20px;
+        background-image: url(/assets/img/back.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        border: none;
+        cursor: pointer;
+      }
+
+      .date {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+      }
+
+      h3 {
+        text-align: center;
+        font-size: 2.5em;
+        padding: 10px;
+        margin-top: 50px;
+        color: #1b1b1b;
+      }
+
+      p {
+        font-size: 1.2em;
+        color: #555;
+      }
+
+      .image-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: auto;
+      }
+
+      .overlay-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.5em;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <a href="#" class="back-button" onclick="goBack()"></a>
+      <div class="date">
+        <!-- don't change real time base -->
+        <div class="day" id="numDay"><h3 style="margin: 0" id="day">1</h3></div>
+        <div class="month" id="numMonth"><h3 style="margin: 0" id="month">January</h3></div>
+      </div>
+      <div class="image-container">
+        <img src="/assets/img/dairy.png" alt="" />
+        <div class="overlay-text" id="commentTextOverlay"></div>
+      </div>
+    </div>
+    <script>
+      function getQueryParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const regex = /([^&=]+)=([^&]*)/g;
+        let m;
+        while ((m = regex.exec(queryString))) {
+          params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        return params;
+      }
+
+      function goBack() {
+        window.location.href = "index.html#calendarPage";
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const params = getQueryParams();
+        document.getElementById("commentTextOverlay").textContent = params.comment;
+
+        // Update the day and month based on the saved date
+        const savedDate = new Date(params.date);
+        const day = savedDate.getDate();
+        const month = savedDate.toLocaleString('default', { month: 'long' });
+        document.getElementById("day").textContent = day;
+        document.getElementById("month").textContent = month;
+      });
+    </script>
+  </body>
 </html>
